@@ -1,0 +1,15 @@
+# Active le moteur de réécriture des URL
+RewriteEngine On
+
+# Définit la base du site si nécessaire (à adapter si ton site est dans un sous-dossier)
+# RewriteBase /mondossier/criee/public
+
+# Redirige toutes les requêtes vers index.php, sauf si c'est un fichier ou un dossier existant
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php [QSA,L]
+
+# Active la prise en charge des fichiers d'environnement (si besoin)
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+</IfModule>
