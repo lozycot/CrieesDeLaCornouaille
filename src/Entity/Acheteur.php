@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AcheteurRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AcheteurRepository::class)]
@@ -36,6 +38,24 @@ class Acheteur
 
     #[ORM\Column(length: 10)]
     private ?string $numHabilitation = null;
+
+    /**
+     * @var Collection<int, Lot>
+     */
+    #[ORM\OneToMany(targetEntity: Lot::class, mappedBy: 'acheteur')]
+    private Collection $lots;
+
+    /**
+     * @var Collection<int, Enchere>
+     */
+    #[ORM\OneToMany(targetEntity: Enchere::class, mappedBy: 'Acheteur', orphanRemoval: true)]
+    private Collection $encheres;
+
+    public function __construct()
+    {
+        $this->encheres = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -137,4 +157,65 @@ class Acheteur
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Lot>
+     */
+    public function getLots(): Collection
+    {
+        return $this->lots;
+    }
+
+    public function addLot(Lot $lot): static
+    {
+        if (!$this->lots->contains($lot)) {
+            $this->lots->add($lot);
+            $lot->setAcheteur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLot(Lot $lot): static
+    {
+        if ($this->lots->removeElement($lot)) {
+            // set the owning side to null (unless already changed)
+            if ($lot->getAcheteur() === $this) {
+                $lot->setAcheteur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Enchere>
+     */
+    public function getEncheres(): Collection
+    {
+        return $this->encheres;
+    }
+
+    public function addEnchere(Enchere $enchere): static
+    {
+        if (!$this->encheres->contains($enchere)) {
+            $this->encheres->add($enchere);
+            $enchere->setAcheteur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEnchere(Enchere $enchere): static
+    {
+        if ($this->encheres->removeElement($enchere)) {
+            // set the owning side to null (unless already changed)
+            if ($enchere->getAcheteur() === $this) {
+                $enchere->setAcheteur(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

@@ -21,7 +21,7 @@ class TypeBateau
     /**
      * @var Collection<int, Bateau>
      */
-    #[ORM\OneToMany(targetEntity: Bateau::class, mappedBy: 'idTypeBateau')]
+    #[ORM\OneToMany(targetEntity: Bateau::class, mappedBy: 'typeBateau')]
     private Collection $bateaux;
 
     public function __construct()
@@ -58,7 +58,7 @@ class TypeBateau
     {
         if (!$this->bateaux->contains($bateaux)) {
             $this->bateaux->add($bateaux);
-            $bateaux->setIdTypeBateau($this);
+            $bateaux->setTypeBateau($this);
         }
 
         return $this;
@@ -68,8 +68,8 @@ class TypeBateau
     {
         if ($this->bateaux->removeElement($bateaux)) {
             // set the owning side to null (unless already changed)
-            if ($bateaux->getIdTypeBateau() === $this) {
-                $bateaux->setIdTypeBateau(null);
+            if ($bateaux->getTypeBateau() === $this) {
+                $bateaux->setTypeBateau(null);
             }
         }
 

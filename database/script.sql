@@ -48,9 +48,10 @@ CREATE TABLE ESPECE(
 );
 
 CREATE TABLE PECHE(
+   idPeche INT PRIMARY KEY AUTO_INCREMENT,
    idBateau INT,
    datePeche DATE NOT NULL,
-   PRIMARY KEY(idBateau, datePeche),
+   -- PRIMARY KEY(idBateau, datePeche),
    dureeMaree INT,
    CONSTRAINT fk_PECHE_bateau
             FOREIGN KEY (idBateau)
@@ -73,7 +74,7 @@ CREATE TABLE LOT_(
    idBateau INT NOT NULL,
    datePeche DATE NOT NULL,
    CONSTRAINT fk_LOT_idBateau_datePeche
-              FOREIGN KEY(idBateau, datePeche)
+           FOREIGN KEY(idBateau, datePeche)
            REFERENCES PECHE(idBateau, datePeche)
            ON UPDATE CASCADE
            ON DELETE CASCADE,
@@ -125,7 +126,8 @@ CREATE TABLE LOT_(
               ON DELETE CASCADE
 );
 
-CREATE TABLE POSTER(
+CREATE TABLE ENCHERE(
+   idEnchere INT PRIMARY KEY AUTO_INCREMENT,
    idAcheteur INT,
    CONSTRAINT fk_POSTER_idAcheteur
               FOREIGN KEY(idAcheteur)
@@ -140,10 +142,9 @@ CREATE TABLE POSTER(
               REFERENCES LOT_(idBateau, datePeche, idLot)
               ON UPDATE CASCADE
               ON DELETE CASCADE,
-   idPoste INT NOT NULL,
-   PRIMARY KEY(idAcheteur, idBateau, datePeche, idLot, idPoste),
+   -- PRIMARY KEY(idAcheteur, idBateau, datePeche, idLot),
    prixEnchere DECIMAL(15,2),
-   heureEnchere DATE
+   heureEnchere TIME
 );
 
 INSERT INTO TYPE_BATEAU VALUES(1, 'Chalutier');
