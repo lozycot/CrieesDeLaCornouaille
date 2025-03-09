@@ -146,23 +146,6 @@ CREATE TABLE POSTER(
    heureEnchere DATE
 );
 
--- CREATE TABLE TYPE_BATEAU(
---    idTypeBateau INT PRIMARY KEY,
---    designation VARCHAR(50)
--- );
-
--- CREATE TABLE BATEAU(
---    idBateau INT PRIMARY KEY AUTO_INCREMENT,
---    tailleBateau INT,
---    nomBateau VARCHAR(50),
---    idTypeBateau INT,
---    CONSTRAINT fk_BATEAU_idTypeBateau
---               FOREIGN KEY (idTypeBateau)
---               REFERENCES TYPE_BATEAU(idTypeBateau)
---               ON UPDATE CASCADE
---               ON DELETE CASCADE
--- );
-
 INSERT INTO TYPE_BATEAU VALUES(1, 'Chalutier');
 INSERT INTO BATEAU(tailleBateau, nomBateau, idTypeBateau) values(15, 'TestNomBateau', 1);
 
