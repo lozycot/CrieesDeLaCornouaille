@@ -4,17 +4,17 @@ CREATE DATABASE criee_test CHARACTER SET utf8mb4;
 USE criee_test;
 
 CREATE TABLE TAILLE(
-   idTaille INT PRIMARY KEY,
+   idTaille INT PRIMARY KEY AUTO_INCREMENT,
    specification VARCHAR(50)
 );
 
 CREATE TABLE BAC_(
-   idBac INT PRIMARY KEY,
+   idBac INT PRIMARY KEY AUTO_INCREMENT,
    tare DECIMAL(7,2)
 );
 
 CREATE TABLE ACHETEUR(
-   idAcheteur INT PRIMARY KEY,
+   idAcheteur INT PRIMARY KEY AUTO_INCREMENT,
    login VARCHAR(7),
    pwd VARCHAR(7),
    raisonSocialeEntreprise VARCHAR(50),
@@ -26,13 +26,13 @@ CREATE TABLE ACHETEUR(
 );
 
 CREATE TABLE BATEAU(
-   idBateau INT PRIMARY KEY,
+   idBateau INT PRIMARY KEY AUTO_INCREMENT,
    typeBateau VARCHAR(50),
    tailleBateau INT
 );
 
 CREATE TABLE ESPECE(
-   idEspece INT PRIMARY KEY,
+   idEspece INT PRIMARY KEY AUTO_INCREMENT,
    nomEspece VARCHAR(50)
 );
 
@@ -49,7 +49,7 @@ CREATE TABLE PECHE(
 );
 
 CREATE TABLE PRESENTATION(
-   idPresentation INT PRIMARY KEY,
+   idPresentation INT PRIMARY KEY AUTO_INCREMENT,
    denomination VARCHAR(50)
 );
 
@@ -134,3 +134,11 @@ CREATE TABLE POSTER(
    prixEnchere DECIMAL(15,2),
    heureEnchere DATE
 );
+
+INSERT INTO BATEAU(typeBateau, tailleBateau) values('chalutier', '15');
+
+DROP USER IF EXISTS 'devuser';
+flush privileges;
+CREATE USER 'devuser'@'%' IDENTIFIED BY 'pa33swdoreVie65zefe';
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON * TO 'devuser'@'%';
