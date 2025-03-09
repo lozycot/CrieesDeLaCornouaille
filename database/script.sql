@@ -15,20 +15,31 @@ CREATE TABLE BAC_(
 
 CREATE TABLE ACHETEUR(
    idAcheteur INT PRIMARY KEY AUTO_INCREMENT,
-   login VARCHAR(7),
-   pwd VARCHAR(7),
+   login VARCHAR(50),
+   pwd VARCHAR(50),
    raisonSocialeEntreprise VARCHAR(50),
-   numRue INT,
+   numRue VARCHAR(5),
    rue VARCHAR(50),
    ville VARCHAR(50),
-   codePostal INT,
+   codePostal VARCHAR(5),
    numHabilitation VARCHAR(10)
+);
+
+CREATE TABLE TYPE_BATEAU(
+   idTypeBateau INT PRIMARY KEY,
+   designation VARCHAR(50)
 );
 
 CREATE TABLE BATEAU(
    idBateau INT PRIMARY KEY AUTO_INCREMENT,
-   typeBateau VARCHAR(50),
-   tailleBateau INT
+   tailleBateau INT,
+   nomBateau VARCHAR(50),
+   idTypeBateau INT,
+   CONSTRAINT fk_BATEAU_idTypeBateau
+              FOREIGN KEY (idTypeBateau)
+              REFERENCES TYPE_BATEAU(idTypeBateau)
+              ON UPDATE CASCADE
+              ON DELETE CASCADE
 );
 
 CREATE TABLE ESPECE(
@@ -135,7 +146,25 @@ CREATE TABLE POSTER(
    heureEnchere DATE
 );
 
-INSERT INTO BATEAU(typeBateau, tailleBateau) values('chalutier', '15');
+-- CREATE TABLE TYPE_BATEAU(
+--    idTypeBateau INT PRIMARY KEY,
+--    designation VARCHAR(50)
+-- );
+
+-- CREATE TABLE BATEAU(
+--    idBateau INT PRIMARY KEY AUTO_INCREMENT,
+--    tailleBateau INT,
+--    nomBateau VARCHAR(50),
+--    idTypeBateau INT,
+--    CONSTRAINT fk_BATEAU_idTypeBateau
+--               FOREIGN KEY (idTypeBateau)
+--               REFERENCES TYPE_BATEAU(idTypeBateau)
+--               ON UPDATE CASCADE
+--               ON DELETE CASCADE
+-- );
+
+INSERT INTO TYPE_BATEAU VALUES(1, 'Chalutier');
+INSERT INTO BATEAU(tailleBateau, nomBateau, idTypeBateau) values(15, 'TestNomBateau', 1);
 
 DROP USER IF EXISTS 'devuser';
 flush privileges;
