@@ -24,6 +24,12 @@ class Espece
     #[ORM\OneToMany(targetEntity: Lot::class, mappedBy: 'espece')]
     private Collection $lots;
 
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $nomCommunEspece = null;
+
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $nomScientifiqueEspece = null;
+
     public function __construct()
     {
         $this->lots = new ArrayCollection();
@@ -72,6 +78,30 @@ class Espece
                 $lot->setEspece(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getNomCommunEspece(): ?string
+    {
+        return $this->nomCommunEspece;
+    }
+
+    public function setNomCommunEspece(?string $nomCommunEspece): static
+    {
+        $this->nomCommunEspece = $nomCommunEspece;
+
+        return $this;
+    }
+
+    public function getNomScientifiqueEspece(): ?string
+    {
+        return $this->nomScientifiqueEspece;
+    }
+
+    public function setNomScientifiqueEspece(?string $nomScientifiqueEspece): static
+    {
+        $this->nomScientifiqueEspece = $nomScientifiqueEspece;
 
         return $this;
     }

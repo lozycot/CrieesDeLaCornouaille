@@ -24,6 +24,9 @@ class Presentation
     #[ORM\OneToMany(targetEntity: Lot::class, mappedBy: 'presentation')]
     private Collection $lots;
 
+    #[ORM\Column(length: 5, nullable: true)]
+    private ?string $code = null;
+
     public function __construct()
     {
         $this->lots = new ArrayCollection();
@@ -72,6 +75,18 @@ class Presentation
                 $lot->setPresentation(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    public function setCode(?string $code): static
+    {
+        $this->code = $code;
 
         return $this;
     }

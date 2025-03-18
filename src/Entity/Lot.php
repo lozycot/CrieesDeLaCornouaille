@@ -13,6 +13,7 @@ class Lot
 {
     #[ORM\Id]
     #[ORM\Column]
+    #[ORM\GeneratedValue]
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'lots')]
