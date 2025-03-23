@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vente{% endblock %}
+
+{% block body %}
+
+        <!-- Header-->
+        <header class="bg-primary bg-gradient text-white">
+            <div class="container px-4 text-center">
+                <h1 class="fw-bolder">Vente</h1>
+                {% if vente is not null %}
+                    {% if venteOuverte %}
+                        <p class="lead">La vente est ouverte !</p>
+                        <a class="btn btn-lg btn-light" href="/vente/encheres">Accéder à la vente du jour</a>
+                    {% else %}
+                        <p class="lead">La prochaine vente ouvrira le {{ vente.dateVente|date('d-m-Y') }} à {{ vente.heureDebut|date('H:i') }}.</p>
+                    {% endif %}
+                {% else %}
+                    <p class="lead">Pas de prochaine vente prévue.</p>
+                {% endif %}
+            </div>
+        </header>
+        <!-- About section-->
+        <section id="parcourir">
+            <div class="container px-4">
+                <div class="row gx-4 justify-content-center">
+                    <div class="col-lg-8">
+                        <h1>Vente du {{ vente.dateVente|date('d-m-Y') }}</h1>
+                        <p class="lead">Un paragraphe</p>
+                        <p></p>
+                        <ul>
+                            <li>Liste</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+{% endblock %}

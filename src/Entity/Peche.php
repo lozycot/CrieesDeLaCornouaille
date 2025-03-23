@@ -18,7 +18,7 @@ class Peche
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'peches')]
-    #[ORM\JoinColumn(name: 'Peche', referencedColumnName:'id', nullable: false)]
+    #[ORM\JoinColumn(name: 'bateau', referencedColumnName:'id', nullable: false)]
     private ?Bateau $bateau = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
