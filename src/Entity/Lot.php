@@ -16,10 +16,6 @@ class Lot
     #[ORM\GeneratedValue]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'lots')]
-    #[ORM\JoinColumn(name: 'Peche', referencedColumnName:'id', nullable: false)]
-    private ?Peche $peche = null;
-
     #[ORM\Column(type: Types::DECIMAL, precision: 17, scale: 2, nullable: true)]
     private ?string $prixPlancher = null;
 
@@ -72,30 +68,20 @@ class Lot
     #[ORM\OneToMany(targetEntity: Enchere::class, mappedBy: 'lot', orphanRemoval: true)]
     private Collection $encheres;
 
+    #[ORM\ManyToOne(inversedBy: 'lots')]
+    private ?Peche $peche = null;
+
 
     public function __construct(
         ?int $lIdLot,
-        ?Peche $laPeche
     ) {
         $this->id = $lIdLot;
-        $this->peche = $laPeche;
         $this->encheres = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getPeche(): ?Peche
-    {
-        return $this->peche;
-    }
-
-    public function setPeche(?Peche $peche): static
-    {
-        $this->peche = $peche;
-        return $this;
     }
 
     public function getPrixPlancher(): ?string
@@ -292,6 +278,18 @@ class Lot
                 $enchere->setLot(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPeche(): ?Peche
+    {
+        return $this->peche;
+    }
+
+    public function setPeche(?Peche $peche): static
+    {
+        $this->peche = $peche;
 
         return $this;
     }

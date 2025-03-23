@@ -15,7 +15,8 @@
             <div class="container px-4">
                 <div class="row gx-4 justify-content-center">
                     <div class="col-lg-8">
-                        <table>
+                        <h2>Lots à la vente</h2>
+                        <table class="table">
                             <tr>
                                 <th>Num. lot</th>
                                 <th>Bateau</th>
@@ -29,7 +30,7 @@
                             {% for lot in lots %}
                                 <tr>
                                     <td>{{ lot.id }}</td>
-                                    <td>{{  }}</td>
+                                    <td>{{ lot.peche.bateau.nomBateau }}</td>
                                     <td>{{ lot.espece.nomEspece }}</td>
                                     <td>{{ lot.bac.id }}</td>
                                     <td>{{ lot.prixDepart }}</td>
