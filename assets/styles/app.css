@@ -875,6 +875,7 @@ progress {
 .g-4,
 .gx-4 {
   --bs-gutter-x: 1.5rem;
+
 }
 
 .g-4,
@@ -10829,8 +10830,8 @@ html {
 }
 
 header {
-  padding-top: 9.5rem;
-  padding-bottom: 6rem;
+  padding-top: 7.5rem;
+  padding-bottom: 4rem;
 }
 
 section {
