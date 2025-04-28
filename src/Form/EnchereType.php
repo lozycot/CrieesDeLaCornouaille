@@ -10,6 +10,8 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class EnchereType extends AbstractType
 {
@@ -17,8 +19,9 @@ class EnchereType extends AbstractType
     {
         $builder
             ->add('prixEnchere')
-            ->add('heureEnchere', null, [
-                'widget' => 'single_text',
+            ->add('heureEnchere', TimeType::class, [
+                'input' => 'datetime',
+                'widget' => 'choice',
             ])
             ->add('Acheteur', EntityType::class, [
                 'class' => Acheteur::class,

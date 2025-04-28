@@ -14,6 +14,7 @@
                         <a class="btn btn-lg btn-light" href="/admin/enchere">Accéder à la vente du jour</a>
                     {% else %}
                         <p class="lead">La prochaine vente ouvrira le {{ vente.dateVente|date('d-m-Y') }} à {{ vente.heureDebut|date('H:i') }}.</p>
+                        <p class="lead">Nous sommes le {{ dateActuelle|date('d-m-Y H:i') }}.</p>
                     {% endif %}
                 {% else %}
                     <p class="lead">Pas de prochaine vente prévue.</p>
@@ -28,11 +29,6 @@
                         {% if vente is not null %}
                             <h1>Vente du {{ vente.dateVente|date('d-m-Y') }}</h1>
                         {% endif %}
-                        <p class="lead">Un paragraphe</p>
-                        <p></p>
-                        <ul>
-                            <li>Liste</li>
-                        </ul>
                     </div>
                 </div>
             </div>
