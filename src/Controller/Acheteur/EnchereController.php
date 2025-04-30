@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Controller\Acheteur;
 
 use App\Entity\Enchere;
 use App\Form\EnchereType;
@@ -13,10 +13,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use DateTime;
 
-#[Route('/admin/enchere')]
+#[Route('/acheteur/enchere')]
 final class EnchereController extends AbstractController
 {
-    #[Route('', name: 'app_admin_enchere')]
+    #[Route('', name: 'app_acheteur_enchere')]
     public function index(?LotRepository $lotRepo, ?VenteRepository $venteRepo, ?EnchereRepository $enchereRepo, VenteVerification $venteVerification): Response
     {
         $dateActuelle = new DateTime("now");
@@ -50,7 +50,7 @@ final class EnchereController extends AbstractController
                 $encheres = $enchereRepo->findBy(array("lot" => $lotActuel));
             }
 
-            return $this->render('admin/enchere/index.html.twig', [
+            return $this->render('acheteur/enchere/index.html.twig', [
                 'controller_name' => 'EnchereController',
                 'lots' => $lots,
                 'dateActuelle' => $dateActuelle,

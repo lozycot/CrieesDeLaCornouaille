@@ -15,12 +15,6 @@ class Acheteur
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 50)]
-    private ?string $login = null;
-
-    #[ORM\Column(length: 50)]
-    private ?string $pwd = null;
-
     #[ORM\Column(length: 50, nullable: true)]
     private ?string $raisonSocialeEntreprise = null;
 
@@ -51,39 +45,18 @@ class Acheteur
     #[ORM\OneToMany(targetEntity: Enchere::class, mappedBy: 'Acheteur', orphanRemoval: true)]
     private Collection $encheres;
 
+    #[ORM\ManyToOne(inversedBy: 'acheteurs')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
     public function __construct()
     {
         $this->encheres = new ArrayCollection();
     }
 
-
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getLogin(): ?string
-    {
-        return $this->login;
-    }
-
-    public function setLogin(string $login): static
-    {
-        $this->login = $login;
-
-        return $this;
-    }
-
-    public function getPwd(): ?string
-    {
-        return $this->pwd;
-    }
-
-    public function setPwd(string $pwd): static
-    {
-        $this->pwd = $pwd;
-
-        return $this;
     }
 
     public function getRaisonSocialeEntreprise(): ?string
@@ -214,6 +187,18 @@ class Acheteur
                 $enchere->setAcheteur(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }
