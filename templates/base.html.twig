@@ -26,7 +26,12 @@
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="#">À propos</a></li>
                         <li class="nav-item"><a class="nav-link" href="/vente">Vente</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#seconnecter">Se connecter</a></li>
+                        {% if app.user != null %}
+                            <li class="nav-item"><a class="nav-link" href="/logout">Déconnexion</a></li>
+                            <li class="nav-item navbar-text mx-2 px-2 border border-white rounded bg-light text-dark">👤 {{ app.user.login }}</li>
+                        {% else %}
+                            <li class="nav-item"><a class="nav-link" href="/login">Se connecter</a></li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>
