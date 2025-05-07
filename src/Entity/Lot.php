@@ -72,10 +72,8 @@ class Lot
     private ?Peche $peche = null;
 
 
-    public function __construct(
-        ?int $lIdLot,
-    ) {
-        $this->id = $lIdLot;
+    public function __construct()
+    {
         $this->encheres = new ArrayCollection();
     }
 

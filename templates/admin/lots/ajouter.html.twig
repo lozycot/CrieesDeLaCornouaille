@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des lots{% endblock %}
+
+{% block body %}
+    <div class="container my-5 p-5 col-lg-5 justify-content-center">
+        <h3>Gestion des lots</h3>
+        <h4>Ajouter des lots</h4>
+
+        {{ form_errors(form) }}
+
+        {{ form_start(form) }}
+
+          <button type="submit" class='btn btn-primary'>Ajouter</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

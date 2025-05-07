@@ -43,7 +43,7 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('roles', ChoiceType::class, [
                 'choices' => [
-                    'Acheteur-ice' => 'ROLE_USER',
+                    'Acheteur-ice' => 'ROLE_ACHETEUR',
                     'Administrateur-ice' => 'ROLE_ADMIN',
                 ],
                 'multiple' => true,

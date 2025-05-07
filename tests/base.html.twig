@@ -32,26 +32,20 @@
                             {% for role in app.user.roles %}
                                 {%if role == 'ROLE_ADMIN' %}
                                     <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Administration
+                                        <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Dropdown
                                         </a>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="/admin/user/new">Créer un utilisateur</a></li>
-                                            <li><a class="dropdown-item" href="/admin/lots">Gérer les lots</a></li>
-                                        </ul>
+                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                            <a class="dropdown-item" href="#">Action</a>
+                                            <a class="dropdown-item" href="#">Another action</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#">Something else here</a>
+                                        </div>
                                     </li>
                                 {% endif %}
                             {% endfor %}
-                            <!-- <li class="nav-item"><a class="nav-link" href="/logout">Déconnexion</a></li> -->
-                            <li class="nav-item  mx-2 px-2 border border-white rounded bg-light dropdown">
-                                <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    👤 {{ app.user.login }}
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="/logout">Déconnexion</a></li>
-                                    <li><a class="dropdown-item" href="#">Paramètres du compte</a></li>
-                                </ul>
-                            </li>
+                            <li class="nav-item"><a class="nav-link" href="/logout">Déconnexion</a></li>
+                            <li class="nav-item navbar-text mx-2 px-2 border border-white rounded bg-light text-dark">👤 {{ app.user.login }}</li>
                         {% else %}
                             <li class="nav-item"><a class="nav-link" href="/login">Se connecter</a></li>
                         {% endif %}
