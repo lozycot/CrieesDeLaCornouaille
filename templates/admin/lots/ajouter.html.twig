@@ -4,12 +4,36 @@
 
 {% block body %}
     <div class="container my-5 p-5 col-lg-5 justify-content-center">
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% for message in app.flashes('warning') %}
+            <div class="alert alert-warning" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+
         <h3>Gestion des lots</h3>
         <h4>Ajouter des lots</h4>
 
         {{ form_errors(form) }}
 
         {{ form_start(form) }}
+            {{ form_row(form.prixPlancher, {label: 'Prix plancher'}) }}
+            {{ form_row(form.prixDepart, {label: 'Prix de départ'}) }}
+            {{ form_row(form.prixEncheresMax, {label: 'Prix d\'enchère maximal'}) }}
+            {{ form_row(form.dateEnchere, {label: 'Date d\'enchère'}) }}
+            {{ form_row(form.heureDebutEnchere, {label: 'Heure de début d\'enchère'}) }}
+            {{ form_row(form.codeEtat, {label: 'Code d\'état'}) }}
+            {{ form_row(form.poidsBrutLot, {label: 'Poids brut du lot'}) }}
+            {{ form_row(form.qualite, {label: 'Qualité du lot'}) }}
+            {{ form_row(form.bac, {label: 'Bac'}) }}
+            {{ form_row(form.presentation, {label: 'Présentation'}) }}
+            {{ form_row(form.taille, {label: 'Taille'}) }}
+            {{ form_row(form.espece, {label: 'Éspèce'}) }}
+            {{ form_row(form.peche, {label: 'Pêche'}) }}
 
           <button type="submit" class='btn btn-primary'>Ajouter</button>
         {{ form_end(form) }}
