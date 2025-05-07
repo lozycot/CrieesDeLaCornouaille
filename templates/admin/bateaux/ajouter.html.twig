@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des bateaux{% endblock %}
+
+{% block body %}
+    <div class="container my-5 p-5 col-lg-5 justify-content-center">
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% for message in app.flashes('warning') %}
+            <div class="alert alert-warning" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        <h3>Gestion des bateaux</h3>
+        <h4>Ajouter des bateaux</h4>
+
+        {{ form_errors(form) }}
+
+        {{ form_start(form) }}
+            {{ form_row(form.nomBateau, {label: 'Nom du bateau'}) }}
+            {{ form_row(form.tailleBateau, {label: 'Taille (m)'}) }}
+            {{ form_row(form.typeBateau, {label: 'Type'}) }}
+
+          <button type="submit" class='btn btn-primary'>Ajouter</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

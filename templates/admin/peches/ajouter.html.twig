@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des pêches{% endblock %}
+
+{% block body %}
+    <div class="container my-5 p-5 col-lg-5 justify-content-center">
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% for message in app.flashes('warning') %}
+            <div class="alert alert-warning" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        <h3>Gestion des pêches</h3>
+        <h4>Ajouter des pêches</h4>
+
+        {{ form_errors(form) }}
+
+        {{ form_start(form) }}
+            {{ form_row(form.datePeche, {label: 'Date'}) }}
+            {{ form_row(form.dureeMaree, {label: 'Durée marée (h)'}) }}
+            {{ form_row(form.bateau, {label: 'Bateau'}) }}
+
+          <button type="submit" class='btn btn-primary'>Ajouter</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
