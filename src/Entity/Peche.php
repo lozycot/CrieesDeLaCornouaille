@@ -34,12 +34,8 @@ class Peche
     private Collection $lots;
 
 
-    public function __construct(
-        ?Bateau $leBateau,
-        ?\DateTimeInterface $laDatePeche,
-    ) {
-        $this->bateau = $leBateau;
-        $this->datePeche = $laDatePeche;
+    public function __construct()
+    {
         $this->lots = new ArrayCollection();
     }
 

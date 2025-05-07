@@ -7,13 +7,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Entity\Lot;
 use App\Form\LotType;
-use App\Repository\LotRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 
+#[Route('/admin/lots')]
 class LotsController extends AbstractController{
 
-    #[Route(path: '/admin/lots', name: 'app_admin_lots')]
+    #[Route(path: '', name: 'app_admin_lots')]
     public function index(): Response
     {
         return $this->render('admin/lots/index.html.twig', [
@@ -21,7 +21,7 @@ class LotsController extends AbstractController{
         ]);
     }
 
-    #[Route(path: '/admin/lots/ajouter', name: 'app_admin_ajouter_lots', methods: ['GET', 'POST'])]
+    #[Route(path: '/ajouter', name: 'app_admin_ajouter_lots', methods: ['GET', 'POST'])]
     public function ajouter(Request $request, EntityManagerInterface $manager): Response
     {
         $newLot = new Lot();

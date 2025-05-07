@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des acheteurs{% endblock %}
+
+{% block body %}
+    <div class="container my-5 p-5 col-lg-5 justify-content-center">
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% for message in app.flashes('warning') %}
+            <div class="alert alert-warning" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% for message in app.flashes('info') %}
+            <div class="alert alert-info" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        <h3>Gestion des acheteurs</h3>
+        <h4>Ajouter des acheteurs</h4>
+
+        {{ form_errors(form) }}
+
+        {{ form_start(form) }}
+            {{ form_row(form.raisonSocialeEntreprise, {label: 'Raison sociale de l\'entreprise'}) }}
+            {{ form_row(form.numRue, {label: 'Numéro de rue / voie'}) }}
+            {{ form_row(form.rue, {label: 'Rue / voie'}) }}
+            {{ form_row(form.ville, {label: 'Ville'}) }}
+            {{ form_row(form.codePostal) }}
+            {{ form_row(form.numHabilitation, {label: 'Numéro d\'habilitation'}) }}
+            {{ form_row(form.user, {label: 'Compte utilisateur'}) }}
+
+          <button type="submit" class='btn btn-primary'>Ajouter</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
