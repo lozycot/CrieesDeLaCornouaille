@@ -15,6 +15,10 @@
             </div>
         {% endfor %}
 
+        <div class="alert alert-info" role="info">
+            Pensez à créer une Vente à la date souhaitée avant de créer des Lots.
+        </div>
+
         <h3>Gestion des lots</h3>
         <h4>Ajouter des lots</h4>
 
@@ -24,7 +28,7 @@
             {{ form_row(form.prixPlancher, {label: 'Prix plancher'}) }}
             {{ form_row(form.prixDepart, {label: 'Prix de départ'}) }}
             {{ form_row(form.prixEncheresMax, {label: 'Prix d\'enchère maximal'}) }}
-            {{ form_row(form.dateEnchere, {label: 'Date d\'enchère'}) }}
+            {{ form_row(form.vente, {label: 'Date de vente'}) }}
             {{ form_row(form.heureDebutEnchere, {label: 'Heure de début d\'enchère'}) }}
             {{ form_row(form.codeEtat, {label: 'Code d\'état'}) }}
             {{ form_row(form.poidsBrutLot, {label: 'Poids brut du lot'}) }}

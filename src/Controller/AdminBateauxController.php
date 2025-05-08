@@ -11,7 +11,7 @@ use App\Entity\Bateau;
 use App\Form\BateauType;
 
 #[Route('/admin/bateaux')]
-final class BateauxController extends AbstractController
+final class AdminBateauxController extends AbstractController
 {
     #[Route('', name: 'app_bateaux')]
     public function index(): Response

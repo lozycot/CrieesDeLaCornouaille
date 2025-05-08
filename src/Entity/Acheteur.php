@@ -34,12 +34,6 @@ class Acheteur
     private ?string $numHabilitation = null;
 
     /**
-     * @var Collection<int, Lot>
-     */
-    #[ORM\OneToMany(targetEntity: Lot::class, mappedBy: 'acheteur')]
-    private Collection $lots;
-
-    /**
      * @var Collection<int, Enchere>
      */
     #[ORM\OneToMany(targetEntity: Enchere::class, mappedBy: 'Acheteur', orphanRemoval: true)]
@@ -134,36 +128,6 @@ class Acheteur
     public function setNumHabilitation(string $numHabilitation): static
     {
         $this->numHabilitation = $numHabilitation;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Lot>
-     */
-    public function getLots(): Collection
-    {
-        return $this->lots;
-    }
-
-    public function addLot(Lot $lot): static
-    {
-        if (!$this->lots->contains($lot)) {
-            $this->lots->add($lot);
-            $lot->setAcheteur($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLot(Lot $lot): static
-    {
-        if ($this->lots->removeElement($lot)) {
-            // set the owning side to null (unless already changed)
-            if ($lot->getAcheteur() === $this) {
-                $lot->setAcheteur(null);
-            }
-        }
 
         return $this;
     }

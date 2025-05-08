@@ -11,7 +11,7 @@ use App\Entity\Peche;
 use App\Form\PecheType;
 
 #[Route('/admin/peches')]
-final class PecheController extends AbstractController
+final class AdminPecheController extends AbstractController
 {
     #[Route('', name: 'app_peches')]
     public function index(): Response

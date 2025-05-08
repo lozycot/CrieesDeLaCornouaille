@@ -23,12 +23,10 @@
         </header>
         <!-- About section-->
         <section id="parcourir">
-            <div class="container px-4">
+            <div class="container px-4 text-center">
                 <div class="row gx-4 justify-content-center">
                     <div class="col-lg-8">
-                        {% if vente is not null %}
-                            <h1>Vente du {{ vente.dateVente|date('d-m-Y') }}</h1>
-                        {% endif %}
+                        <h1>Calendrier des ventes</h1>
                     </div>
                 </div>
             </div>
