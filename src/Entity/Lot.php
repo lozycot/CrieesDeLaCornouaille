@@ -25,9 +25,6 @@ class Lot
     #[ORM\Column(type: Types::DECIMAL, precision: 17, scale: 2, nullable: true)]
     private ?string $prixEncheresMax = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $dateEnchere = null;
-
     #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $heureDebutEnchere = null;
 
@@ -67,6 +64,10 @@ class Lot
 
     #[ORM\ManyToOne(inversedBy: 'lots')]
     private ?Facture $facture = null;
+
+    #[ORM\ManyToOne(inversedBy: 'lots')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Vente $vente = null;
 
 
     public function __construct()
@@ -111,18 +112,6 @@ class Lot
     public function setPrixEncheresMax(?string $prixEncheresMax): static
     {
         $this->prixEncheresMax = $prixEncheresMax;
-
-        return $this;
-    }
-
-    public function getDateEnchere(): ?\DateTimeInterface
-    {
-        return $this->dateEnchere;
-    }
-
-    public function setDateEnchere(?\DateTimeInterface $dateEnchere): static
-    {
-        $this->dateEnchere = $dateEnchere;
 
         return $this;
     }
@@ -273,6 +262,18 @@ class Lot
     public function setFacture(?Facture $facture): static
     {
         $this->facture = $facture;
+
+        return $this;
+    }
+
+    public function getVente(): ?Vente
+    {
+        return $this->vente;
+    }
+
+    public function setVente(?Vente $vente): static
+    {
+        $this->vente = $vente;
 
         return $this;
     }

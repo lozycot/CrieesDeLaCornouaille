@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Gestion des bateaux{% endblock %}
+{% block title %}Gestion des ventes{% endblock %}
 
 {% block body %}
     <div class="container my-5 p-5 col-lg-5 justify-content-center">
@@ -14,21 +14,16 @@
                 {{ message }}
             </div>
         {% endfor %}
-        {% for message in app.flashes('danger') %}
-            <div class="alert alert-danger" role="alert">
-                {{ message }}
-            </div>
-        {% endfor %}
 
-        <h3>Gestion des bateaux</h3>
-        <h4>Ajouter des bateaux</h4>
+        <h3>Gestion des ventes</h3>
+        <h4>Ajouter des ventes</h4>
 
         {{ form_errors(form) }}
 
         {{ form_start(form) }}
-            {{ form_row(form.nomBateau, {label: 'Nom du bateau'}) }}
-            {{ form_row(form.tailleBateau, {label: 'Taille (m)'}) }}
-            {{ form_row(form.typeBateau, {label: 'Type'}) }}
+            {{ form_row(form.dateVente, {label: 'Date'}) }}
+            {{ form_row(form.heureDebut, {label: 'Heure de début'}) }}
+            {{ form_row(form.heureFin, {label: 'Heure de fin'}) }}
 
           <button type="submit" class='btn btn-primary'>Ajouter</button>
         {{ form_end(form) }}

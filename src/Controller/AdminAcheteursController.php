@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 
 #[Route('/admin/acheteurs')]
-class AcheteursController extends AbstractController{
+class AdminAcheteursController extends AbstractController{
 
     #[Route(path: '', name: 'app_admin_acheteurs')]
     public function index(): Response

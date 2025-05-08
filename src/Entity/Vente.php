@@ -19,21 +19,21 @@ class Vente
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $dateVente = null;
 
-    /**
-     * @var Collection<int, Enchere>
-     */
-    #[ORM\OneToMany(targetEntity: Enchere::class, mappedBy: 'Vente')]
-    private Collection $encheres;
-
     #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $heureDebut = null;
 
     #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $heureFin = null;
 
+    /**
+     * @var Collection<int, Lot>
+     */
+    #[ORM\OneToMany(targetEntity: Lot::class, mappedBy: 'vente')]
+    private Collection $lots;
+
     public function __construct()
     {
-        $this->encheres = new ArrayCollection();
+        $this->lots = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -49,36 +49,6 @@ class Vente
     public function setDateVente(\DateTimeInterface $dateVente): static
     {
         $this->dateVente = $dateVente;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Enchere>
-     */
-    public function getEncheres(): Collection
-    {
-        return $this->encheres;
-    }
-
-    public function addEnchere(Enchere $enchere): static
-    {
-        if (!$this->encheres->contains($enchere)) {
-            $this->encheres->add($enchere);
-            $enchere->setVente($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEnchere(Enchere $enchere): static
-    {
-        if ($this->encheres->removeElement($enchere)) {
-            // set the owning side to null (unless already changed)
-            if ($enchere->getVente() === $this) {
-                $enchere->setVente(null);
-            }
-        }
 
         return $this;
     }
@@ -103,6 +73,36 @@ class Vente
     public function setHeureFin(?\DateTimeInterface $heureFin): static
     {
         $this->heureFin = $heureFin;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Lot>
+     */
+    public function getLots(): Collection
+    {
+        return $this->lots;
+    }
+
+    public function addLot(Lot $lot): static
+    {
+        if (!$this->lots->contains($lot)) {
+            $this->lots->add($lot);
+            $lot->setVente($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLot(Lot $lot): static
+    {
+        if ($this->lots->removeElement($lot)) {
+            // set the owning side to null (unless already changed)
+            if ($lot->getVente() === $this) {
+                $lot->setVente(null);
+            }
+        }
 
         return $this;
     }

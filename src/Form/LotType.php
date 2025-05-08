@@ -10,6 +10,8 @@ use App\Entity\Peche;
 use App\Entity\Presentation;
 use App\Entity\Qualite;
 use App\Entity\Taille;
+use App\Entity\Vente;
+use Dom\Entity;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -23,14 +25,16 @@ class LotType extends AbstractType
             ->add('prixPlancher')
             ->add('prixDepart')
             ->add('prixEncheresMax')
-            ->add('dateEnchere', null, [
-                'widget' => 'single_text',
-            ])
             ->add('heureDebutEnchere', null, [
                 'widget' => 'single_text',
             ])
+            ->add('vente', EntityType::class, [
+                'class' => Vente::class,
+                'choice_label' => function(Vente $entity){
+                    return $entity->getId().' - '.$entity->getDateVente()->format('d/m/Y');
+                },
+            ])
             ->add('codeEtat')
-            // ->add('idFacture')
             ->add('poidsBrutLot')
             ->add('qualite', EntityType::class, [
                 'class' => Qualite::class,
@@ -38,10 +42,6 @@ class LotType extends AbstractType
                     return $entity->getCode().' - '.$entity->getDenomination();
                 },
             ])
-            // ->add('acheteur', EntityType::class, [
-            //     'class' => Acheteur::class,
-            //     'choice_label' => 'id',
-            // ])
             ->add('bac', EntityType::class, [
                 'class' => Bac::class,
                 'choice_label' => 'tare',
@@ -65,7 +65,7 @@ class LotType extends AbstractType
             ->add('peche', EntityType::class, [
                 'class' => Peche::class,
                 'choice_label' => function(Peche $entity){
-                    return $entity->getId().' - '.$entity->getDatePeche()->format('d-m-Y').' - '.$entity->getBateau()->getNomBateau();
+                    return $entity->getId().' - '.$entity->getDatePeche()->format('d/m/Y').' - '.$entity->getBateau()->getNomBateau();
                 },
             ])
         ;

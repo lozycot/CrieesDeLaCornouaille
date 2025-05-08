@@ -15,6 +15,21 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col p-4 justify-content-center">
+                        {% for message in app.flashes('success') %}
+                            <div class="alert alert-success" role="alert">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                        {% for message in app.flashes('warning') %}
+                            <div class="alert alert-warning" role="alert">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                        {% for message in app.flashes('danger') %}
+                            <div class="alert alert-danger" role="alert">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
                         <h3>Lots à la vente</h3>
                         <table class="table">
                             <tr>
@@ -74,10 +89,10 @@
                         <div class="col p-4 justify-content-center">
                             <h3>Formulaire d'enchères</h3>
                             <h4>Lot n°{{ idLotActuel }}</h4>
-                            {#{ form_start(form) }#}
-                            {{ form_row(form.prixEnchere) }}
-                            <button type="submit" class="btn btn-primary">Envoyer</button>
-                            {#{ form_end(form) }#}
+                            {{ form_start(form) }}
+                                {{ form_row(form.prixEnchere, {label: 'Prix d\'enchère', 'type': 'number', 'min': enchereLaPlusHaute }) }}
+                                <button type="submit" class="btn btn-primary">Envoyer</button>
+                            {{ form_end(form) }}
                             
                         </div>
                     {% endif %}
