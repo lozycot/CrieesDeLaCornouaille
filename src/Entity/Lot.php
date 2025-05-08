@@ -35,16 +35,10 @@ class Lot
     private ?string $codeEtat = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $idFacture = null;
-
-    #[ORM\Column(nullable: true)]
     private ?int $poidsBrutLot = null;
 
     #[ORM\ManyToOne(inversedBy: 'lots')]
     private ?Qualite $qualite = null;
-
-    #[ORM\ManyToOne(inversedBy: 'lots')]
-    private ?Acheteur $acheteur = null;
 
     #[ORM\ManyToOne(inversedBy: 'lots')]
     #[ORM\JoinColumn(nullable: false)]
@@ -71,11 +65,12 @@ class Lot
     #[ORM\ManyToOne(inversedBy: 'lots')]
     private ?Peche $peche = null;
 
+    #[ORM\ManyToOne(inversedBy: 'lots')]
+    private ?Facture $facture = null;
 
-    public function __construct(
-        ?int $lIdLot,
-    ) {
-        $this->id = $lIdLot;
+
+    public function __construct()
+    {
         $this->encheres = new ArrayCollection();
     }
 
@@ -156,18 +151,6 @@ class Lot
         return $this;
     }
 
-    public function getIdFacture(): ?int
-    {
-        return $this->idFacture;
-    }
-
-    public function setIdFacture(?int $idFacture): static
-    {
-        $this->idFacture = $idFacture;
-
-        return $this;
-    }
-
     public function getPoidsBrutLot(): ?int
     {
         return $this->poidsBrutLot;
@@ -188,18 +171,6 @@ class Lot
     public function setQualite(?Qualite $qualite): static
     {
         $this->qualite = $qualite;
-
-        return $this;
-    }
-
-    public function getAcheteur(): ?Acheteur
-    {
-        return $this->acheteur;
-    }
-
-    public function setAcheteur(?Acheteur $acheteur): static
-    {
-        $this->acheteur = $acheteur;
 
         return $this;
     }
@@ -290,6 +261,18 @@ class Lot
     public function setPeche(?Peche $peche): static
     {
         $this->peche = $peche;
+
+        return $this;
+    }
+
+    public function getFacture(): ?Facture
+    {
+        return $this->facture;
+    }
+
+    public function setFacture(?Facture $facture): static
+    {
+        $this->facture = $facture;
 
         return $this;
     }

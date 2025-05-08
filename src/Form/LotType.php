@@ -30,23 +30,27 @@ class LotType extends AbstractType
                 'widget' => 'single_text',
             ])
             ->add('codeEtat')
-            ->add('idFacture')
+            // ->add('idFacture')
             ->add('poidsBrutLot')
             ->add('qualite', EntityType::class, [
                 'class' => Qualite::class,
-                'choice_label' => 'id',
+                'choice_label' => function(Qualite $entity){
+                    return $entity->getCode().' - '.$entity->getDenomination();
+                },
             ])
-            ->add('acheteur', EntityType::class, [
-                'class' => Acheteur::class,
-                'choice_label' => 'id',
-            ])
+            // ->add('acheteur', EntityType::class, [
+            //     'class' => Acheteur::class,
+            //     'choice_label' => 'id',
+            // ])
             ->add('bac', EntityType::class, [
                 'class' => Bac::class,
-                'choice_label' => 'id',
+                'choice_label' => 'tare',
             ])
             ->add('presentation', EntityType::class, [
                 'class' => Presentation::class,
-                'choice_label' => 'id',
+                'choice_label' => function(Presentation $entity){
+                    return $entity->getCode().' - '.$entity->getDenomination();
+                },
             ])
             ->add('taille', EntityType::class, [
                 'class' => Taille::class,
@@ -54,11 +58,15 @@ class LotType extends AbstractType
             ])
             ->add('espece', EntityType::class, [
                 'class' => Espece::class,
-                'choice_label' => 'id',
+                'choice_label' => function(Espece $entity){
+                    return $entity->getNomEspece().' - '.$entity->getNomCommunEspece();
+                },
             ])
             ->add('peche', EntityType::class, [
                 'class' => Peche::class,
-                'choice_label' => 'id',
+                'choice_label' => function(Peche $entity){
+                    return $entity->getId().' - '.$entity->getDatePeche()->format('d-m-Y').' - '.$entity->getBateau()->getNomBateau();
+                },
             ])
         ;
     }
