@@ -28,9 +28,6 @@ class Enchere
     #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $heureEnchere = null;
 
-    #[ORM\ManyToOne(inversedBy: 'encheres')]
-    private ?Vente $Vente = null;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -84,15 +81,4 @@ class Enchere
         return $this;
     }
 
-    public function getVente(): ?Vente
-    {
-        return $this->Vente;
-    }
-
-    public function setVente(?Vente $Vente): static
-    {
-        $this->Vente = $Vente;
-
-        return $this;
-    }
 }

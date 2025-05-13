@@ -10,30 +10,37 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\TimeType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
 class EnchereType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('prixEnchere')
-            ->add('heureEnchere', TimeType::class, [
-                'input' => 'datetime',
-                'widget' => 'choice',
-            ])
-            ->add('Acheteur', EntityType::class, [
-                'class' => Acheteur::class,
-                'choice_label' => 'id',
-            ])
+            ->add('prixEnchere', NumberType::class, array(
+                'rounding_mode' => 0,
+                'scale' => 2,
+                'attr' => array(
+                    'min' => 0,
+                    'max' => 5000,
+                    'step' => 0.01,
+                ),
+            ))
+            // ->add('heureEnchere', TimeType::class, [
+            //     'input' => 'datetime',
+            //     'widget' => 'choice',
+            // ])
+            // ->add('Acheteur', EntityType::class, [
+            //     'class' => Acheteur::class,
+            //     'choice_label' => 'id',
+            // ])
             ->add('lot', EntityType::class, [
                 'class' => Lot::class,
                 'choice_label' => 'id',
-            ])
-            ->add('Vente', EntityType::class, [
-                'class' => Vente::class,
-                'choice_label' => 'id',
+                'label' => false,
+                'attr' => [
+                    'hidden' => true,
+                ],
             ])
         ;
     }

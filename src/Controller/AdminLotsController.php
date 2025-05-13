@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 
 #[Route('/admin/lots')]
-class LotsController extends AbstractController{
+class AdminLotsController extends AbstractController{
 
     #[Route(path: '', name: 'app_admin_lots')]
     public function index(): Response
