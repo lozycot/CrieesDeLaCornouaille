@@ -24,36 +24,33 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link" href="#">À propos</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/vente">Vente</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ path('app_about') }}">À propos</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ path('app_vente') }}">Vente</a></li>
                         {# Si un utilisateur est authentifié : #}
                         {% if app.user != null %}
                             {# Si c'est un admin #}
-                            {% for role in app.user.roles %}
-                                {%if role == 'ROLE_ADMIN' %}
-                                    <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Administration
-                                        </a>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="/admin/user/new">Créer un utilisateur</a></li>
-                                            <li><a class="dropdown-item" href="/admin/acheteurs">Gérer les acheteurs</a></li>
-                                            <li><a class="dropdown-item" href="/admin/lots">Gérer les lots</a></li>
-                                            <li><a class="dropdown-item" href="/admin/bateaux">Gérer les bateaux</a></li>
-                                            <li><a class="dropdown-item" href="/admin/peches">Gérer les pêches</a></li>
-                                            <li><a class="dropdown-item" href="/admin/ventes">Gérer les dates de vente</a></li>
-                                        </ul>
-                                    </li>
-                                {% endif %}
-                            {% endfor %}
-                            <!-- <li class="nav-item"><a class="nav-link" href="/logout">Déconnexion</a></li> -->
-                            <li class="nav-item  mx-2 px-2 border border-white rounded bg-light dropdown">
-                                <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            {% if 'ROLE_ADMIN' in app.user.roles %}
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Administration
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="adminDropdown">
+                                        <li><a class="dropdown-item" href="{{ path('admin_user_new') }}">Créer un utilisateur</a></li>
+                                        <li><a class="dropdown-item" href="{{ path('app_admin_acheteurs') }}">Gérer les acheteurs</a></li>
+                                        <li><a class="dropdown-item" href="{{ path('app_admin_lots') }}">Gérer les lots</a></li>
+                                        <li><a class="dropdown-item" href="{{ path('app_bateaux') }}">Gérer les bateaux</a></li>
+                                        <li><a class="dropdown-item" href="{{ path('app_peches') }}">Gérer les pêches</a></li>
+                                        <li><a class="dropdown-item" href="{{ path('app_ventes') }}">Gérer les dates de vente</a></li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            <li class="nav-item dropdown mx-2 px-2 border border-white rounded bg-light">
+                                <a class="nav-link dropdown-toggle text-dark" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     👤 {{ app.user.login }}
                                 </a>
-                                <ul class="dropdown-menu">
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                                     <li><a class="dropdown-item" href="/logout">Déconnexion</a></li>
-                                    <li><a class="dropdown-item" href="#">Paramètres du compte</a></li>
+                                    <li><a class="dropdown-item" href="{{ path('account_settings') }}">Paramètres du compte</a></li>
                                 </ul>
                             </li>
                         {% else %}
