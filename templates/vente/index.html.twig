@@ -7,7 +7,7 @@
         <header class="bg-primary bg-gradient text-white">
             <div class="container px-4 text-center">
                 <h1 class="fw-bolder">Vente</h1>
-                {% if ventes is not null %}
+                {% if ventes is defined and ventes|length > 0 %}
                     {% if venteOuverte %}
                         <p class="lead">La vente est ouverte !</p>
                         <a class="btn btn-lg btn-light" href="/acheteur/enchere">Accéder à la vente du jour</a>
