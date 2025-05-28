@@ -1,6 +1,9 @@
 import './bootstrap.js';
 import 'bootstrap';
 /*
+ * Bootstrap c'est nul
+ * On va faire avec pour l'instant, et on va essayer de pas trop pleurer.
+ * 
  * Welcome to your app's main JavaScript file!
  *
  * This file will be included onto the page via the importmap() Twig function,

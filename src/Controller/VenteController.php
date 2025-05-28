@@ -13,7 +13,7 @@ use DateTime;
 class VenteController extends AbstractController
 {
     #[Route('/vente', name: 'app_vente')]
-    public function index(?VenteRepository $repository, VenteVerification $venteVerification): Response
+    public function index(?VenteRepository $repository, VenteVerification $venteVerification, LotRepository $lotRepository): Response
     {
         $ventes = $repository->findProchainesVentes();
         $dateActuelle = new DateTime("now");
@@ -21,11 +21,21 @@ class VenteController extends AbstractController
         if($ventes != null)
             $venteOuverte = $venteVerification->venteEstOuverte($ventes[0]);
 
+        // Fetch all ventes for the calendrier
+        $ventes = $repository->findBy([], ['dateVente' => 'ASC', 'heureDebut' => 'ASC']);
+
+        // Fetch lots for the next vente (if any)
+        $lotsProchaineVente = [];
+        if ($ventes) {
+            $lotsProchaineVente = $ventes[0]->getLots();
+        }
+
         return $this->render('vente/index.html.twig', [
             'controller_name' => 'VenteController',
             'ventes' => $ventes,
             'dateActuelle' => $dateActuelle,
             'venteOuverte' => $venteOuverte,
+            'lotsProchaineVente' => $lotsProchaineVente,
         ]);
     }
 }

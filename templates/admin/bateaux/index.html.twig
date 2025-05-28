@@ -6,9 +6,26 @@
     <div class="container my-5 p-5 col-lg-5 justify-content-center">
         <h3>Gestion des bateaux</h3>
         <ul class="list-group">
-            <li class="list-group-item"><a href="/admin/bateaux/ajouter">Ajouter des bateaux</a></li>
-            <li class="list-group-item">Modifier des bateaux</li>
-            <li class="list-group-item">Supprimer des bateaux</li>
+            <li class="list-group-item"><a href="{{ path('app_admin_ajouter_bateaux') }}">Ajouter des bateaux</a></li>
+            <li class="list-group-item"><a href="{{ path('app_bateaux') }}">Modifier des bateaux</a></li>
+            <li class="list-group-item"><a href="{{ path('app_bateaux') }}">Supprimer des bateaux</a></li>
+        </ul>
+        <h4 class="mt-4">Liste des bateaux</h4>
+        <ul class="list-group">
+            {% for bateau in bateaux %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{ bateau.nomBateau }}
+                    <span>
+                        <a href="{{ path('app_admin_modifier_bateau', {'id': bateau.id}) }}" class="btn btn-sm btn-warning">Modifier</a>
+                        <form method="post" action="{{ path('app_admin_supprimer_bateau', {'id': bateau.id}) }}" style="display:inline;" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce bateau ?');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ bateau.id) }}">
+                            <button class="btn btn-sm btn-danger">Supprimer</button>
+                        </form>
+                    </span>
+                </li>
+            {% else %}
+                <li class="list-group-item">Aucun bateau enregistré.</li>
+            {% endfor %}
         </ul>
     </div>
 {% endblock %}
