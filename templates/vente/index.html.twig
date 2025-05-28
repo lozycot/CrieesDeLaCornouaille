@@ -7,12 +7,12 @@
         <header class="bg-primary bg-gradient text-white">
             <div class="container px-4 text-center">
                 <h1 class="fw-bolder">Vente</h1>
-                {% if vente is not null %}
+                {% if ventes is not null %}
                     {% if venteOuverte %}
                         <p class="lead">La vente est ouverte !</p>
                         <a class="btn btn-lg btn-light" href="/acheteur/enchere">Accéder à la vente du jour</a>
                     {% else %}
-                        <p class="lead">La prochaine vente ouvrira le {{ vente.dateVente|date('d-m-Y') }} à {{ vente.heureDebut|date('H:i') }}.</p>
+                        <p class="lead">La prochaine vente ouvrira le {{ ventes[0].dateVente|date('d-m-Y') }} à {{ ventes.heureDebut|date('H:i') }}.</p>
                         <p class="lead">Nous sommes le {{ dateActuelle|date('d-m-Y H:i') }}.</p>
                     {% endif %}
                 {% else %}
@@ -20,6 +20,7 @@
                 {% endif %}
             </div>
         </header>
+
 
         <!-- Tabs section: card overlaps header with negative margin -->
         <div class="card shadow-lg w-100 mx-auto" style="max-width: 1100px; margin-top: -2.5rem; z-index: 10; position: relative;">
@@ -98,6 +99,7 @@
                         {% else %}
                             <p>Aucun lot prévu pour la prochaine vente.</p>
                         {% endif %}
+
                     </div>
                 </div>
             </div>

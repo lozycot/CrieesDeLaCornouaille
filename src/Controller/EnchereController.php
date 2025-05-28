@@ -49,6 +49,7 @@ final class EnchereController extends AbstractController
 
             // chercher le lot actuellement ouvert à la vente, si il y en a un
             $lotActuel = null;
+            $idLotActuel = -1;
             $indexLotSuivant = 0;
             $heureFinEnchere = date_create('00:00:00');
             foreach($lots as $unLot) {
@@ -67,17 +68,19 @@ final class EnchereController extends AbstractController
             
             // trouver les enchères pour ce lot
             $encheres = null;
-            if($lotActuel != null) {
-                $encheres = $enchereRepo->findBy(array("lot" => $lotActuel), array('prixEnchere' => 'ASC'));
-            }
-
-            // trouver l'enchère la plus haute
             $enchereLaPlusHaute = 0;
-            foreach($encheres as $e) {
-                if($e->getPrixEnchere() > $enchereLaPlusHaute) {
-                    $enchereLaPlusHaute = $e->getPrixEnchere();
+
+            if($lotActuel != null) {
+                $idLotActuel = $lotActuel->getId();
+                $encheres = $enchereRepo->findBy(array("lot" => $lotActuel), array('prixEnchere' => 'ASC'));
+                // trouver l'enchère la plus haute
+                foreach ((array) $encheres as $e) {
+                    if ($e->getPrixEnchere() > $enchereLaPlusHaute) {
+                        $enchereLaPlusHaute = $e->getPrixEnchere();
+                    }
                 }
             }
+
 
             // création du nouvel objet enchère + du formulaire
             $newEnchere = new Enchere();
@@ -123,7 +126,7 @@ final class EnchereController extends AbstractController
                 'controller_name' => 'EnchereController',
                 'lots' => $lots,
                 'dateActuelle' => $dateActuelle,
-                'idLotActuel' => $lotActuel->getId(),
+                'idLotActuel' => $idLotActuel,
                 'form' => $form,
                 'encheres' => $encheres,
                 'enchereLaPlusHaute' => $enchereLaPlusHaute,
