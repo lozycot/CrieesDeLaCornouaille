@@ -12,7 +12,7 @@
                         <p class="lead">La vente est ouverte !</p>
                         <a class="btn btn-lg btn-light" href="/acheteur/enchere">Accéder à la vente du jour</a>
                     {% else %}
-                        <p class="lead">La prochaine vente ouvrira le {{ ventes[0].dateVente|date('d-m-Y') }} à {{ ventes.heureDebut|date('H:i') }}.</p>
+                        <p class="lead">La prochaine vente ouvrira le {{ ventes[0].dateVente|date('d-m-Y') }} à {{ ventes[0].heureDebut|date('H:i') }}.</p>
                         <p class="lead">Nous sommes le {{ dateActuelle|date('d-m-Y H:i') }}.</p>
                     {% endif %}
                 {% else %}
