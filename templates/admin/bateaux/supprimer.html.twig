@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Supprimer des bateaux{% endblock %}
+
+{% block body %}
+<div class="container my-5 p-5 col-lg-5 justify-content-center">
+    <h3>Supprimer des bateaux</h3>
+    <ul class="list-group">
+        {% for bateau in bateaux %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                {{ bateau.nomBateau }}
+                <form method="post" action="{{ path('app_admin_supprimer_bateau', {'id': bateau.id}) }}" style="display:inline;" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce bateau ?');">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ bateau.id) }}">
+                    <button class="btn btn-sm btn-danger">Supprimer</button>
+                </form>
+            </li>
+        {% else %}
+            <li class="list-group-item">Aucun bateau enregistré.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

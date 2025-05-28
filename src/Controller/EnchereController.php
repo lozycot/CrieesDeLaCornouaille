@@ -41,9 +41,11 @@ final class EnchereController extends AbstractController
             return $this->redirectToRoute("app_vente");
         } else { // sinon aller sur la page enchères
 
-            
-            // récupérer les lots
-            $lots = $lotRepo->findByDateVente($dateActuelle);
+            // récupérer les lots de la vente ouverte uniquement
+            $lots = [];
+            if ($vente) {
+                $lots = $vente->getLots();
+            }
 
             // chercher le lot actuellement ouvert à la vente, si il y en a un
             $lotActuel = null;
@@ -82,6 +84,17 @@ final class EnchereController extends AbstractController
             // assigner le lot actuellement à la vente
             if($newEnchere->getLot() == null)
                 $newEnchere->setLot($lotActuel);
+
+            // Pré-remplir le prixEnchere selon la règle demandée (+3 au lieu de +10)
+            if ($lotActuel !== null) {
+                if ($encheres && count($encheres) > 0 && $enchereLaPlusHaute > 0) {
+                    $defaultPrix = $enchereLaPlusHaute + 3;
+                } else {
+                    $defaultPrix = $lotActuel->getPrixDepart();
+                }
+                $newEnchere->setPrixEnchere($defaultPrix);
+            }
+
             $form = $this->createForm(EnchereType::class, $newEnchere);
 
             // Enregistrement des données

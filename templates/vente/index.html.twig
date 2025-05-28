@@ -3,7 +3,6 @@
 {% block title %}Vente{% endblock %}
 
 {% block body %}
-
         <!-- Header-->
         <header class="bg-primary bg-gradient text-white">
             <div class="container px-4 text-center">
@@ -21,15 +20,86 @@
                 {% endif %}
             </div>
         </header>
-        <!-- About section-->
-        <section id="parcourir">
-            <div class="container px-4 text-center">
-                <div class="row gx-4 justify-content-center">
-                    <div class="col-lg-8">
-                        <h1>Calendrier des ventes</h1>
+
+        <!-- Tabs section: card overlaps header with negative margin -->
+        <div class="card shadow-lg w-100 mx-auto" style="max-width: 1100px; margin-top: -2.5rem; z-index: 10; position: relative;">
+            <div class="card-body">
+                <ul class="nav nav-tabs mb-3" id="ventesLotsTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="ventes-tab" data-bs-toggle="tab" data-bs-target="#ventes" type="button" role="tab" aria-controls="ventes" aria-selected="true">
+                            Calendrier des ventes
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="lots-tab" data-bs-toggle="tab" data-bs-target="#lots" type="button" role="tab" aria-controls="lots" aria-selected="false">
+                            Lots prochaine vente
+                        </button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="ventesLotsTabsContent">
+                    <div class="tab-pane fade show active" id="ventes" role="tabpanel" aria-labelledby="ventes-tab">
+                        <h4>Calendrier des ventes</h4>
+                        {% if ventes is defined and ventes|length > 0 %}
+                            <table class="table table-bordered table-striped mt-4">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Heure de début</th>
+                                        <th>Heure de fin</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for v in ventes %}
+                                        <tr>
+                                            <td>{{ v.dateVente|date('d-m-Y') }}</td>
+                                            <td>{{ v.heureDebut ? v.heureDebut|date('H:i') : '-' }}</td>
+                                            <td>{{ v.heureFin ? v.heureFin|date('H:i') : '-' }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        {% else %}
+                            <p>Aucune vente programmée.</p>
+                        {% endif %}
+                    </div>
+                    <div class="tab-pane fade" id="lots" role="tabpanel" aria-labelledby="lots-tab">
+                        <h4>Lots prévus pour la prochaine vente</h4>
+                        {% if app.user and lotsProchaineVente|length > 0 %}
+                            <table class="table table-bordered table-striped mt-4">
+                                <thead>
+                                    <tr>
+                                        <th>Num. lot</th>
+                                        <th>Espèce</th>
+                                        <th>Bac</th>
+                                        <th>Prix départ</th>
+                                        <th>Poids (Kg)</th>
+                                        <th>Taille</th>
+                                        <th>Qualité</th>
+                                        <th>Heure d'ouverture enchère</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for lot in lotsProchaineVente %}
+                                        <tr>
+                                            <td>{{ lot.id }}</td>
+                                            <td>{{ lot.espece.nomEspece }}</td>
+                                            <td>{{ lot.bac.tare }}</td>
+                                            <td>{{ lot.prixDepart }}</td>
+                                            <td>{{ lot.poidsBrutLot }}</td>
+                                            <td>{{ lot.taille.id }}</td>
+                                            <td>{{ lot.qualite.code }}</td>
+                                            <td>{{ lot.heureDebutEnchere|date('H:i') }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        {% elseif not app.user %}
+                            <p class="text-muted">Connectez-vous pour voir les lots de la prochaine vente.</p>
+                        {% else %}
+                            <p>Aucun lot prévu pour la prochaine vente.</p>
+                        {% endif %}
                     </div>
                 </div>
             </div>
-        </section>
-
+        </div>
 {% endblock %}

@@ -36,6 +36,7 @@
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="adminDropdown">
                                         <li><a class="dropdown-item" href="{{ path('admin_user_new') }}">Créer un utilisateur</a></li>
+                                        <li><a class="dropdown-item" href="{{ path('admin_users') }}">Modérer les utilisateurs</a></li>
                                         <li><a class="dropdown-item" href="{{ path('app_admin_acheteurs') }}">Gérer les acheteurs</a></li>
                                         <li><a class="dropdown-item" href="{{ path('app_admin_lots') }}">Gérer les lots</a></li>
                                         <li><a class="dropdown-item" href="{{ path('app_bateaux') }}">Gérer les bateaux</a></li>
@@ -61,5 +62,14 @@
             </div>
         </nav>
         {% block body %}{% endblock %}
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+                tooltipTriggerList.forEach(function (tooltipTriggerEl) {
+                    new bootstrap.Tooltip(tooltipTriggerEl);
+                });
+            });
+        </script>
     </body>
 </html>

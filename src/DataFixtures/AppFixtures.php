@@ -11,6 +11,8 @@ use App\Entity\Bateau;
 use App\Entity\Bac;
 use App\Entity\Espece;
 use App\Entity\Peche;
+use App\Entity\Vente;
+use App\Entity\Lot;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -151,6 +153,7 @@ class AppFixtures extends Fixture
         }
 
         // Peche
+        $peches = [];
         $pecheData = [
             [1, '2025-05-12', 15, 1],
             [2, '2025-05-14', 23, 2],
@@ -164,6 +167,67 @@ class AppFixtures extends Fixture
             $peche->setDureeMaree($duree);
             $peche->setBateau($bateaux[$bateauId]);
             $manager->persist($peche);
+            $peches[$id] = $peche;
+        }
+
+        // Add 5 ventes with today's date, heureDebut/heureFin as described
+        $today = new \DateTimeImmutable('today');
+        $now = new \DateTime();
+        // Round up to the next half hour
+        $minute = (int)$now->format('i');
+        $second = (int)$now->format('s');
+        if ($minute === 0 && $second === 0) {
+            $nextHalfHour = (clone $now)->setTime((int)$now->format('H'), 0, 0);
+        } elseif ($minute < 30) {
+            $nextHalfHour = (clone $now)->setTime((int)$now->format('H'), 30, 0);
+        } else {
+            $nextHalfHour = (clone $now)->modify('+1 hour')->setTime((int)$now->format('H') + 1, 0, 0);
+        }
+
+        $ventesArray = [];
+        $heureDebut = clone $nextHalfHour;
+        for ($i = 0; $i < 5; $i++) {
+            $vente = new Vente();
+            $vente->setDateVente(\DateTime::createFromImmutable($today));
+            $vente->setHeureDebut(clone $heureDebut);
+            $heureFin = (clone $heureDebut)->modify('+1 hour');
+            $vente->setHeureFin($heureFin);
+            $manager->persist($vente);
+            $ventesArray[] = $vente;
+            $heureDebut = (clone $heureFin);
+        }
+
+        // Create 3 to 7 lots for each vente
+        foreach ($ventesArray as $vente) {
+            $nbLots = random_int(3, 7);
+            for ($i = 0; $i < $nbLots; $i++) {
+                $lot = new Lot();
+                $lot->setPrixPlancher(mt_rand(100, 300) / 10); // 10.0 - 30.0
+
+                // Générer un prix au Kg et un poids, puis calculer le prix de départ
+                $prixAuKg = mt_rand(20, 120) / 10; // 2.0 - 12.0
+                $poids = mt_rand(4, 40); // 4 - 40 Kg
+                $prixDepart = $prixAuKg * $poids;
+                $lot->setPrixDepart($prixDepart);
+
+                $lot->setPrixEncheresMax(mt_rand(200, 500) / 10); // 20.0 - 50.0
+
+                // Heure d'ouverture enchère: répartir sur l'heure de la vente
+                $minutes = (int)($i * (60 / $nbLots));
+                $heureDebutEnchere = (clone $vente->getHeureDebut())->modify("+$minutes minutes");
+                $lot->setHeureDebutEnchere($heureDebutEnchere);
+                $lot->setVente($vente);
+                $lot->setCodeEtat('OK');
+                $lot->setPoidsBrutLot($poids);
+                $lot->setQualite($qualites[array_rand($qualites)]);
+                $lot->setBac($bacs[array_rand($bacs)]);
+                $lot->setPresentation($presentations[array_rand($presentations)]);
+                $lot->setTaille($tailles[array_rand($tailles)]);
+                $lot->setEspece($especes[array_rand($especes)]);
+                // Assign a random Peche to each lot
+                $lot->setPeche($peches[array_rand($peches)]);
+                $manager->persist($lot);
+            }
         }
 
         $manager->flush();
