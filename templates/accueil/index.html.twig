@@ -21,12 +21,27 @@
                 <p class="lead">Application Criée de la Cornouaille</p>
             </div>
         </header>
-        <!-- About section-->
-        <section id="">
+        <section id="calendrier">
             <div class="container px-4">
                 <div class="row gx-4 justify-content-center">
                     <div class="col-lg-8">
-
+                        <h1>Calendrier des ventes</h1>
+                        <table class="table">
+                            <tr>
+                                <th>Date</th>
+                                <th>Heure d'ouverture</th>
+                                <th>Heure de fermeture</th>
+                            </tr>
+                        {% if ventes is not null %}
+                            {% for vente in ventes %}
+                            <tr>
+                                <td>{{ vente.dateVente|date('d/m/Y') }}</td>
+                                <td>{{ vente.heureDebut|date('H:i') }}</td>
+                                <td>{{ vente.heureFin|date('H:i') }}</td>
+                            </tr>
+                            {% endfor %}
+                        {% endif %}
+                        </table>
                     </div>
                 </div>
             </div>

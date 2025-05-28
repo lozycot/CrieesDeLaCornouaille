@@ -8,12 +8,12 @@
         <header class="bg-primary bg-gradient text-white">
             <div class="container px-4 text-center">
                 <h1 class="fw-bolder">Vente</h1>
-                {% if vente is not null %}
+                {% if ventes is not null %}
                     {% if venteOuverte %}
                         <p class="lead">La vente est ouverte !</p>
                         <a class="btn btn-lg btn-light" href="/acheteur/enchere">Accéder à la vente du jour</a>
                     {% else %}
-                        <p class="lead">La prochaine vente ouvrira le {{ vente.dateVente|date('d-m-Y') }} à {{ vente.heureDebut|date('H:i') }}.</p>
+                        <p class="lead">La prochaine vente ouvrira le {{ ventes[0].dateVente|date('d-m-Y') }} à {{ ventes.heureDebut|date('H:i') }}.</p>
                         <p class="lead">Nous sommes le {{ dateActuelle|date('d-m-Y H:i') }}.</p>
                     {% endif %}
                 {% else %}
@@ -21,12 +21,27 @@
                 {% endif %}
             </div>
         </header>
-        <!-- About section-->
-        <section id="parcourir">
-            <div class="container px-4 text-center">
+        <section id="calendrier">
+            <div class="container px-4">
                 <div class="row gx-4 justify-content-center">
                     <div class="col-lg-8">
                         <h1>Calendrier des ventes</h1>
+                        <table class="table">
+                            <tr>
+                                <th>Date</th>
+                                <th>Heure d'ouverture</th>
+                                <th>Heure de fermeture</th>
+                            </tr>
+                        {% if ventes is not null %}
+                            {% for vente in ventes %}
+                            <tr>
+                                <td>{{ vente.dateVente|date('d/m/Y') }}</td>
+                                <td>{{ vente.heureDebut|date('H:i') }}</td>
+                                <td>{{ vente.heureFin|date('H:i') }}</td>
+                            </tr>
+                            {% endfor %}
+                        {% endif %}
+                        </table>
                     </div>
                 </div>
             </div>
