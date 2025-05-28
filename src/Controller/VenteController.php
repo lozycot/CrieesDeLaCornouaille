@@ -26,8 +26,8 @@ class VenteController extends AbstractController
 
         // Fetch lots for the next vente (if any)
         $lotsProchaineVente = [];
-        if ($vente) {
-            $lotsProchaineVente = $vente->getLots();
+        if ($ventes) {
+            $lotsProchaineVente = $ventes[0]->getLots();
         }
 
         return $this->render('vente/index.html.twig', [
@@ -35,7 +35,6 @@ class VenteController extends AbstractController
             'ventes' => $ventes,
             'dateActuelle' => $dateActuelle,
             'venteOuverte' => $venteOuverte,
-            'ventes' => $ventes,
             'lotsProchaineVente' => $lotsProchaineVente,
         ]);
     }
