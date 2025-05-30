@@ -4,16 +4,7 @@
 
 {% block body %}
     <div class="container my-5 p-5 col-lg-5 justify-content-center">
-        {% for message in app.flashes('success') %}
-            <div class="alert alert-success" role="alert">
-                {{ message }}
-            </div>
-        {% endfor %}
-        {% for message in app.flashes('warning') %}
-            <div class="alert alert-warning" role="alert">
-                {{ message }}
-            </div>
-        {% endfor %}
+        {{ affichageDesMessages }}
 
         <div class="alert alert-info" role="info">
             Pensez à créer une Vente à la date souhaitée avant de créer des Lots.

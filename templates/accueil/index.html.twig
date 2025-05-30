@@ -7,16 +7,7 @@
         <!-- Header-->
         <header class="bg-primary bg-gradient text-white">
             <div class="container px-4 text-center">
-                {% for message in app.flashes('success') %}
-                    <div class="alert alert-success" role="alert">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-                {% for message in app.flashes('warning') %}
-                    <div class="alert alert-warning" role="alert">
-                        {{ message }}
-                    </div>
-                {% endfor %}
+                {{ affichageDesMessages }}
                 <h1 class="fw-bolder">Criée de la Cornouaille</h1>
                 <p class="lead">Application Criée de la Cornouaille</p>
             </div>

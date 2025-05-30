@@ -3,6 +3,7 @@
 {% block title %}Modifier un utilisateur{% endblock %}
 {% block body %}
 <div class="container my-5 p-5 col-lg-5">
+    {{ affichageDesMessages }}
     <h3>Modifier {{ user.login }}</h3>
     {{ form_start(form) }}
         {{ form_widget(form) }}

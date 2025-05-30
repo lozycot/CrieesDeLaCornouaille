@@ -3,6 +3,7 @@
 {% block title %}Gestion des utilisateurs{% endblock %}
 {% block body %}
 <div class="container my-5 p-5 col-lg-8">
+    {{ affichageDesMessages }}
     <h3>Utilisateurs</h3>
     <ul class="list-group">
         {% for user in users %}

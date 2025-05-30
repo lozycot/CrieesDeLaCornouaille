@@ -3,29 +3,45 @@
 {% block title %}Gestion des pêches{% endblock %}
 
 {% block body %}
-    <div class="container my-5 p-5 col-lg-5 justify-content-center">
+    <div class="container my-5 p-5 col-lg-10">
+        {{ affichageDesMessages }}
         <h3>Gestion des pêches</h3>
-        <ul class="list-group">
-            <li class="list-group-item"><a href="{{ path('app_admin_ajouter_peches') }}">Ajouter des pêches</a></li>
-            <li class="list-group-item"><a href="{{ path('app_peches') }}">Modifier des pêches</a></li>
-            <li class="list-group-item"><a href="{{ path('app_peches') }}">Supprimer des pêches</a></li>
-        </ul>
-        <h4 class="mt-4">Liste des pêches</h4>
-        <ul class="list-group">
-            {% for peche in peches %}
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    {{ peche.id }} - {{ peche.datePeche|date('d/m/Y') }}
-                    <span>
-                        <a href="{{ path('app_admin_modifier_peche', {'id': peche.id}) }}" class="btn btn-sm btn-warning">Modifier</a>
-                        <form method="post" action="{{ path('app_admin_supprimer_peche', {'id': peche.id}) }}" style="display:inline;" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette pêche ?');">
-                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ peche.id) }}">
-                            <button class="btn btn-sm btn-danger">Supprimer</button>
-                        </form>
-                    </span>
-                </li>
-            {% else %}
-                <li class="list-group-item">Aucune pêche enregistrée.</li>
-            {% endfor %}
-        </ul>
+        <div class="mb-3">
+            <ul class="list-group">
+                <li class="list-group-item"><a href="{{ path('app_admin_ajouter_peches') }}">Ajouter des pêches</a></li>
+            </ul>
+        </div>
+        <table class="table table-bordered table-striped align-middle">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Date</th>
+                    <th>Durée marée (h)</th>
+                    <th>Bateau</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for peche in peches %}
+                    <tr>
+                        <td>{{ peche.id }}</td>
+                        <td>{{ peche.datePeche|date('d/m/Y') }}</td>
+                        <td>{{ peche.dureeMaree }}</td>
+                        <td>{{ peche.bateau.nomBateau }}</td>
+                        <td class="text-center align-middle">
+                            <div class="d-flex justify-content-center align-items-center gap-2">
+                                <a href="{{ path('app_admin_modifier_peche', {'id': peche.id}) }}" class="btn btn-sm btn-warning">Modifier</a>
+                                <form method="post" action="{{ path('app_admin_supprimer_peche', {'id': peche.id}) }}">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ peche.id) }}">
+                                    <button class="btn btn-sm btn-danger">Supprimer</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr><td colspan="5">Aucune pêche.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 {% endblock %}

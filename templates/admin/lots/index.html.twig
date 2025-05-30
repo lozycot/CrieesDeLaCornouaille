@@ -3,30 +3,63 @@
 {% block title %}Gestion des lots{% endblock %}
 
 {% block body %}
-    <div class="container my-5 p-5 col-lg-5 justify-content-center">
+    <div class="container my-5 p-5 col-lg-12">
+        {{ affichageDesMessages }}
         <h3>Gestion des lots</h3>
-        <ul class="list-group">
-            <li class="list-group-item"><a href="{{ path('app_admin_ajouter_lots') }}">Ajouter des lots</a></li>
-            <li class="list-group-item"><a href="{{ path('app_admin_lots') }}">Modifier des lots</a></li>
-            <li class="list-group-item"><a href="{{ path('app_admin_supprimer_lot_liste') }}">Supprimer des lots</a></li>
-        </ul>
-        <h4 class="mt-4">Liste des lots</h4>
-        {% set lots = lots|default([]) %}
-        <ul class="list-group">
-            {% for lot in lots %}
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    Lot #{{ lot.id }}
-                    <span>
-                        <a href="{{ path('app_admin_modifier_lot', {'id': lot.id}) }}" class="btn btn-sm btn-warning">Modifier</a>
-                        <form method="post" action="{{ path('app_admin_supprimer_lot', {'id': lot.id}) }}" style="display:inline;" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce lot ?');">
-                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ lot.id) }}">
-                            <button class="btn btn-sm btn-danger">Supprimer</button>
-                        </form>
-                    </span>
-                </li>
-            {% else %}
-                <li class="list-group-item">Aucun lot enregistré.</li>
-            {% endfor %}
-        </ul>
+        <div class="mb-3">
+            <ul class="list-group">
+                <li class="list-group-item"><a href="{{ path('app_admin_ajouter_lots') }}">Ajouter un lot</a></li>
+            </ul>
+        </div>
+        <table class="table table-bordered table-striped align-middle">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Vente</th>
+                    <th>Espèce</th>
+                    <th>Poids<br>(Kg)</th>
+                    <th>Prix<br>départ</th>
+                    <th>Qualité</th>
+                    <th>Bac</th>
+                    <th>Présentation</th>
+                    <th>Taille</th>
+                    <th>Début<br>enchère</th>
+                    <th>Pêche</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for lot in lots %}
+                    <tr>
+                        <td>{{ lot.id }}</td>
+                        <td>{{ lot.vente.id }}</td>
+                        <td>{{ lot.espece.nomEspece }}</td>
+                        <td>{{ lot.poidsBrutLot }}</td>
+                        <td>{{ lot.prixDepart }}</td>
+                        <td>{{ lot.qualite.code }}</td>
+                        <td>{{ lot.bac.tare }}</td>
+                        <td>{{ lot.presentation.denomination }}</td>
+                        <td>{{ lot.taille.id }}</td>
+                        <td>{{ lot.heureDebutEnchere|date('H:i') }}</td>
+                        <td>
+                            {% if lot.peche %}
+                                {{ lot.peche.id }} ({{ lot.peche.bateau.nomBateau }})
+                            {% endif %}
+                        </td>
+                        <td class="text-center align-middle">
+                            <div class="d-flex justify-content-center align-items-center gap-2">
+                                <a href="{{ path('app_admin_modifier_lot', {'id': lot.id}) }}" class="btn btn-sm btn-warning">Modifier</a>
+                                <form method="post" action="{{ path('app_admin_supprimer_lot', {'id': lot.id}) }}" style="display:inline;" onsubmit="return confirm('Supprimer ce lot ?');">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ lot.id) }}">
+                                    <button class="btn btn-sm btn-danger">Supprimer</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr><td colspan="12">Aucun lot.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 {% endblock %}

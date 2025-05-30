@@ -3,30 +3,51 @@
 {% block title %}Gestion des acheteurs{% endblock %}
 
 {% block body %}
-    <div class="container my-5 p-5 col-lg-5 justify-content-center">
+    <div class="container my-5 p-5 col-lg-10">
+        {{ affichageDesMessages }}
         <h3>Gestion des acheteurs</h3>
-        <ul class="list-group">
-            <li class="list-group-item"><a href="{{ path('app_admin_ajouter_acheteur') }}">Ajouter des acheteurs</a></li>
-            <li class="list-group-item"><a href="{{ path('app_admin_acheteurs') }}">Modifier des acheteurs</a></li>
-            <li class="list-group-item"><a href="{{ path('app_admin_acheteurs') }}">Supprimer des acheteurs</a></li>
-        </ul>
-        <h4 class="mt-4">Liste des acheteurs</h4>
-        <ul class="list-group">
-            {# You need to pass 'acheteurs' from your controller #}
-            {% for acheteur in acheteurs %}
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    {{ acheteur.raisonSocialeEntreprise }}
-                    <span>
-                        <a href="{{ path('app_admin_modifier_acheteur', {'id': acheteur.id}) }}" class="btn btn-sm btn-warning">Modifier</a>
-                        <form method="post" action="{{ path('app_admin_supprimer_acheteur', {'id': acheteur.id}) }}" style="display:inline;" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet acheteur ?');">
-                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ acheteur.id) }}">
-                            <button class="btn btn-sm btn-danger">Supprimer</button>
-                        </form>
-                    </span>
-                </li>
-            {% else %}
-                <li class="list-group-item">Aucun acheteur enregistré.</li>
-            {% endfor %}
-        </ul>
+        <div class="mb-3">
+            <ul class="list-group">
+                <li class="list-group-item"><a href="{{ path('app_admin_ajouter_acheteur') }}">Ajouter un acheteur</a></li>
+            </ul>
+        </div>
+        <table class="table table-bordered table-striped align-middle">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Raison sociale</th>
+                    <th>Adresse</th>
+                    <th>Ville</th>
+                    <th>Code postal</th>
+                    <th>Num. habilitation</th>
+                    <th>Utilisateur</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for acheteur in acheteurs %}
+                    <tr>
+                        <td>{{ acheteur.id }}</td>
+                        <td>{{ acheteur.raisonSocialeEntreprise }}</td>
+                        <td>{{ acheteur.numRue }} {{ acheteur.rue }}</td>
+                        <td>{{ acheteur.ville }}</td>
+                        <td>{{ acheteur.codePostal }}</td>
+                        <td>{{ acheteur.numHabilitation }}</td>
+                        <td>{{ acheteur.user.login }}</td>
+                        <td class="text-center align-middle">
+                            <div class="d-flex justify-content-center align-items-center gap-2">
+                                <a href="{{ path('app_admin_modifier_acheteur', {'id': acheteur.id}) }}" class="btn btn-sm btn-warning">Modifier</a>
+                                <form method="post" action="{{ path('app_admin_supprimer_acheteur', {'id': acheteur.id}) }}" style="display:inline;" onsubmit="return confirm('Supprimer cet acheteur ?');">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ acheteur.id) }}">
+                                    <button class="btn btn-sm btn-danger">Supprimer</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr><td colspan="8">Aucun acheteur.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 {% endblock %}

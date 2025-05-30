@@ -3,29 +3,45 @@
 {% block title %}Gestion des bateaux{% endblock %}
 
 {% block body %}
-    <div class="container my-5 p-5 col-lg-5 justify-content-center">
+    <div class="container my-5 p-5 col-lg-10">
+        {{ affichageDesMessages }}
         <h3>Gestion des bateaux</h3>
-        <ul class="list-group">
-            <li class="list-group-item"><a href="{{ path('app_admin_ajouter_bateaux') }}">Ajouter des bateaux</a></li>
-            <li class="list-group-item"><a href="{{ path('app_bateaux') }}">Modifier des bateaux</a></li>
-            <li class="list-group-item"><a href="{{ path('app_bateaux') }}">Supprimer des bateaux</a></li>
-        </ul>
-        <h4 class="mt-4">Liste des bateaux</h4>
-        <ul class="list-group">
-            {% for bateau in bateaux %}
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    {{ bateau.nomBateau }}
-                    <span>
-                        <a href="{{ path('app_admin_modifier_bateau', {'id': bateau.id}) }}" class="btn btn-sm btn-warning">Modifier</a>
-                        <form method="post" action="{{ path('app_admin_supprimer_bateau', {'id': bateau.id}) }}" style="display:inline;" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce bateau ?');">
-                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ bateau.id) }}">
-                            <button class="btn btn-sm btn-danger">Supprimer</button>
-                        </form>
-                    </span>
-                </li>
-            {% else %}
-                <li class="list-group-item">Aucun bateau enregistré.</li>
-            {% endfor %}
-        </ul>
+        <div class="mb-3">
+            <ul class="list-group">
+                <li class="list-group-item"><a href="{{ path('app_admin_ajouter_bateaux') }}">Ajouter un bateau</a></li>
+            </ul>
+        </div>
+        <table class="table table-bordered table-striped align-middle">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Taille (m)</th>
+                    <th>Type</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for bateau in bateaux %}
+                    <tr>
+                        <td>{{ bateau.id }}</td>
+                        <td>{{ bateau.nomBateau }}</td>
+                        <td>{{ bateau.tailleBateau }}</td>
+                        <td>{{ bateau.typeBateau.designation }}</td>
+                        <td class="text-center align-middle">
+                            <div class="d-flex justify-content-center align-items-center gap-2">
+                                <a href="{{ path('app_admin_modifier_bateau', {'id': bateau.id}) }}" class="btn btn-sm btn-warning">Modifier</a>
+                                <form method="post" action="{{ path('app_admin_supprimer_bateau', {'id': bateau.id}) }}" style="display:inline;" onsubmit="return confirm('Supprimer ce bateau ?');">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ bateau.id) }}">
+                                    <button class="btn btn-sm btn-danger">Supprimer</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr><td colspan="5">Aucun bateau.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 {% endblock %}
