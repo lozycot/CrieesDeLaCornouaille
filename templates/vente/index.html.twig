@@ -6,6 +6,7 @@
         <!-- Header-->
         <header class="bg-primary bg-gradient text-white">
             <div class="container px-4 text-center">
+                {{ affichageDesMessages }}
                 <h1 class="fw-bolder">Vente</h1>
                 {% if ventes is defined and ventes|length > 0 %}
                     {% if venteOuverte %}

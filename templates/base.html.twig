@@ -1,4 +1,26 @@
 <!DOCTYPE html>
+
+{# Ajouter ce bloc dans les templates pour afficher les messages d'erreur,
+de validations, etc. #}
+{% set affichageDesMessages %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('warning') %}
+        <div class="alert alert-warning" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('info') %}
+        <div class="alert alert-info" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endset %}
+
+
 <html>
     <head>
         <meta charset="utf-8" />

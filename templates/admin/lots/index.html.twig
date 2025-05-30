@@ -4,27 +4,28 @@
 
 {% block body %}
     <div class="container my-5 p-5 col-lg-12">
+        {{ affichageDesMessages }}
         <h3>Gestion des lots</h3>
         <div class="mb-3">
             <ul class="list-group">
                 <li class="list-group-item"><a href="{{ path('app_admin_ajouter_lots') }}">Ajouter un lot</a></li>
             </ul>
         </div>
-        <table class="table table-bordered table-striped align-middle" style="table-layout: fixed; width: 100%; min-width: 750px;">
+        <table class="table table-bordered table-striped align-middle">
             <thead>
                 <tr>
-                    <th style="width: 36px;">ID</th>
-                    <th style="width: 48px;">Vente</th>
-                    <th style="width: 90px;">Espèce</th>
-                    <th style="width: 38px;">Poids<br>(Kg)</th>
-                    <th style="width: 70px;">Prix<br>départ</th>
-                    <th style="width: 55px;">Qualité</th>
-                    <th style="width: 45px;">Bac</th>
-                    <th style="width: 90px;">Présentation</th>
-                    <th style="width: 48px;">Taille</th>
-                    <th style="width: 55px;">Début<br>enchère</th>
-                    <th style="width: 90px;">Pêche</th>
-                    <th style="width: 110px;">Actions</th>
+                    <th>ID</th>
+                    <th>Vente</th>
+                    <th>Espèce</th>
+                    <th>Poids<br>(Kg)</th>
+                    <th>Prix<br>départ</th>
+                    <th>Qualité</th>
+                    <th>Bac</th>
+                    <th>Présentation</th>
+                    <th>Taille</th>
+                    <th>Début<br>enchère</th>
+                    <th>Pêche</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>

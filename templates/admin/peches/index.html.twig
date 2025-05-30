@@ -4,20 +4,21 @@
 
 {% block body %}
     <div class="container my-5 p-5 col-lg-10">
+        {{ affichageDesMessages }}
         <h3>Gestion des pêches</h3>
         <div class="mb-3">
             <ul class="list-group">
                 <li class="list-group-item"><a href="{{ path('app_admin_ajouter_peches') }}">Ajouter des pêches</a></li>
             </ul>
         </div>
-        <table class="table table-bordered table-striped align-middle" style="table-layout: fixed; width: 100%; min-width: 700px;">
+        <table class="table table-bordered table-striped align-middle">
             <thead>
                 <tr>
-                    <th style="width: 50px;">ID</th>
-                    <th style="width: 120px;">Date</th>
-                    <th style="width: 160px;">Durée marée (h)</th>
-                    <th style="width: 180px;">Bateau</th>
-                    <th style="width: 120px;">Actions</th>
+                    <th>ID</th>
+                    <th>Date</th>
+                    <th>Durée marée (h)</th>
+                    <th>Bateau</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -30,7 +31,7 @@
                         <td class="text-center align-middle">
                             <div class="d-flex justify-content-center align-items-center gap-2">
                                 <a href="{{ path('app_admin_modifier_peche', {'id': peche.id}) }}" class="btn btn-sm btn-warning">Modifier</a>
-                                <form method="post" action="{{ path('app_admin_supprimer_peche', {'id': peche.id}) }}" style="display:inline;" onsubmit="return confirm('Supprimer cette pêche ?');">
+                                <form method="post" action="{{ path('app_admin_supprimer_peche', {'id': peche.id}) }}">
                                     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ peche.id) }}">
                                     <button class="btn btn-sm btn-danger">Supprimer</button>
                                 </form>

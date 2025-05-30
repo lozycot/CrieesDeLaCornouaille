@@ -4,20 +4,21 @@
 
 {% block body %}
     <div class="container my-5 p-5 col-lg-10">
+        {{ affichageDesMessages }}
         <h3>Gestion des bateaux</h3>
         <div class="mb-3">
             <ul class="list-group">
                 <li class="list-group-item"><a href="{{ path('app_admin_ajouter_bateaux') }}">Ajouter un bateau</a></li>
             </ul>
         </div>
-        <table class="table table-bordered table-striped align-middle" style="table-layout: fixed; width: 100%; min-width: 700px;">
+        <table class="table table-bordered table-striped align-middle">
             <thead>
                 <tr>
-                    <th style="width: 50px;">ID</th>
-                    <th style="width: 200px;">Nom</th>
-                    <th style="width: 120px;">Taille (m)</th>
-                    <th style="width: 180px;">Type</th>
-                    <th style="width: 120px;">Actions</th>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Taille (m)</th>
+                    <th>Type</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>

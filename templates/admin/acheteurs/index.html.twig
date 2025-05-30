@@ -4,23 +4,24 @@
 
 {% block body %}
     <div class="container my-5 p-5 col-lg-10">
+        {{ affichageDesMessages }}
         <h3>Gestion des acheteurs</h3>
         <div class="mb-3">
             <ul class="list-group">
                 <li class="list-group-item"><a href="{{ path('app_admin_ajouter_acheteur') }}">Ajouter un acheteur</a></li>
             </ul>
         </div>
-        <table class="table table-bordered table-striped align-middle" style="table-layout: fixed; width: 100%; min-width: 950px;">
+        <table class="table table-bordered table-striped align-middle">
             <thead>
                 <tr>
-                    <th style="width: 50px;">ID</th>
-                    <th style="width: 170px;">Raison sociale</th>
-                    <th style="width: 180px;">Adresse</th>
-                    <th style="width: 120px;">Ville</th>
-                    <th style="width: 100px;">Code postal</th>
-                    <th style="width: 140px;">Num. habilitation</th>
-                    <th style="width: 120px;">Utilisateur</th>
-                    <th style="width: 120px;">Actions</th>
+                    <th>ID</th>
+                    <th>Raison sociale</th>
+                    <th>Adresse</th>
+                    <th>Ville</th>
+                    <th>Code postal</th>
+                    <th>Num. habilitation</th>
+                    <th>Utilisateur</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
