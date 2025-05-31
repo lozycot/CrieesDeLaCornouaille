@@ -19,15 +19,22 @@ class Facture
     #[ORM\JoinColumn(nullable: false)]
     private ?Acheteur $acheteur = null;
 
+    #[ORM\Column]
+    private ?bool $payee = null;
+
+    #[ORM\ManyToOne(inversedBy: 'factures')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Vente $vente = null;
+
     /**
-     * @var Collection<int, Lot>
+     * @var Collection<int, Enchere>
      */
-    #[ORM\OneToMany(targetEntity: Lot::class, mappedBy: 'facture')]
-    private Collection $lots;
+    #[ORM\OneToMany(targetEntity: Enchere::class, mappedBy: 'facture')]
+    private Collection $encheres;
 
     public function __construct()
     {
-        $this->lots = new ArrayCollection();
+        $this->encheres = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -47,30 +54,54 @@ class Facture
         return $this;
     }
 
-    /**
-     * @return Collection<int, Lot>
-     */
-    public function getLots(): Collection
+    public function isPayee(): ?bool
     {
-        return $this->lots;
+        return $this->payee;
     }
 
-    public function addLot(Lot $lot): static
+    public function setPayee(bool $payee): static
     {
-        if (!$this->lots->contains($lot)) {
-            $this->lots->add($lot);
-            $lot->setFacture($this);
+        $this->payee = $payee;
+
+        return $this;
+    }
+
+    public function getVente(): ?Vente
+    {
+        return $this->vente;
+    }
+
+    public function setVente(?Vente $vente): static
+    {
+        $this->vente = $vente;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Enchere>
+     */
+    public function getEncheres(): Collection
+    {
+        return $this->encheres;
+    }
+
+    public function addEnchere(Enchere $enchere): static
+    {
+        if (!$this->encheres->contains($enchere)) {
+            $this->encheres->add($enchere);
+            $enchere->setFacture($this);
         }
 
         return $this;
     }
 
-    public function removeLot(Lot $lot): static
+    public function removeEnchere(Enchere $enchere): static
     {
-        if ($this->lots->removeElement($lot)) {
+        if ($this->encheres->removeElement($enchere)) {
             // set the owning side to null (unless already changed)
-            if ($lot->getFacture() === $this) {
-                $lot->setFacture(null);
+            if ($enchere->getFacture() === $this) {
+                $enchere->setFacture(null);
             }
         }
 

@@ -1,0 +1,64 @@
+
+<div class="card-body">
+    <h3 class="card-title">Facture n°{{ facture.id }}</h3>
+    Criée de Poulgoazec, Port de Poulgoazec, 29780 Plouhinec
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item"><strong>Date :</strong> {{ facture.vente.dateVente|date('d-m-Y') }}</li>
+        <li class="list-group-item"><strong>Payée :</strong>
+            {% if facture.payee %}
+                Oui
+            {% else %}
+                Non
+            {% endif %}
+        </li>
+        <li class="list-group-item"><strong>Client :</strong><br>
+            {{ app.user.acheteur.raisonSocialeEntreprise }}<br>
+            {{ app.user.acheteur.numRue }} {{ app.user.acheteur.rue }}<br>
+            {{ app.user.acheteur.codePostal }} {{ app.user.acheteur.ville }}
+        </li>
+        <li class="list-group-item">
+            <strong>Lots remportés :</strong>
+            <table class="table table-bordered table-striped mt-4">
+                <thead>
+                    <tr>
+                        <th>Num. lot</th>
+                        <th>Bateau</th>
+                        <th>Date pêche</th>
+                        <th>Éspèce</th>
+                        <th>Bac</th>
+                        <th>Prix au Kg</th>
+                        <th>Prix départ</th>
+                        <th>Poids (Kg)</th>
+                        <th>Taille</th>
+                        <th>ETQP</th>
+                        <th>Montant<br>Enchère</th>
+                        <th>TVA</th>
+                        <th>Prix</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% set total = 0.00 %}
+                    {% for enchere in facture.encheres %}
+                        <tr>
+                            <td>{{ enchere.lot.id }}</td>
+                            <td>{{ enchere.lot.peche.bateau.nomBateau }}</td>
+                            <td>{{ enchere.lot.peche.datePeche|date('d-m-Y') }}</td>
+                            <td>{{ enchere.lot.espece.nomEspece }}</td>
+                            <td>{{ enchere.lot.bac.tare }}</td>
+                            <td>{{ enchere.lot.prixDepart }}</td>
+                            <td>{{ enchere.lot.prixDepart }}</td>
+                            <td>{{ enchere.lot.poidsBrutLot }}</td>
+                            <td>{{ enchere.lot.taille.id }}</td>
+                            <td>{{ enchere.lot.qualite.code }}</td>
+                            <td>{{ enchere.prixEnchere }}</td>
+                            <td>20%</td>
+                            <td>{{ enchere.prixEnchere * 1.2 }}</td>
+                            {% set total = total + enchere.prixEnchere %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table></li>
+        <li class="list-group-item">Total (HT) : {{ total }} €</li>
+        <li class="list-group-item"><strong>TOTAL À RÉGLER :</strong> {{ (total * 1.2) }} €</li>
+    </ul>
+</div>

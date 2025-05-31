@@ -38,12 +38,13 @@ security:
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/acheteur, roles: ROLE_ACHETEUR }
+        - { path: ^/compta, roles: ROLE_COMPTA }
         # - { path: ^/profile, roles: ROLE_USER }
 
     role_hierarchy:
         ROLE_USER: ~
         ROLE_ACHETEUR: ROLE_USER
-        ROLE_ADMIN: ROLE_ACHETEUR
+        ROLE_ADMIN: [ROLE_ACHETEUR, ROLE_COMPTA]
 when@test:
     security:
         password_hashers:

@@ -31,9 +31,16 @@ class Vente
     #[ORM\OneToMany(targetEntity: Lot::class, mappedBy: 'vente')]
     private Collection $lots;
 
+    /**
+     * @var Collection<int, Facture>
+     */
+    #[ORM\OneToMany(targetEntity: Facture::class, mappedBy: 'vente')]
+    private Collection $factures;
+
     public function __construct()
     {
         $this->lots = new ArrayCollection();
+        $this->factures = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -101,6 +108,36 @@ class Vente
             // set the owning side to null (unless already changed)
             if ($lot->getVente() === $this) {
                 $lot->setVente(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Facture>
+     */
+    public function getFactures(): Collection
+    {
+        return $this->factures;
+    }
+
+    public function addFacture(Facture $facture): static
+    {
+        if (!$this->factures->contains($facture)) {
+            $this->factures->add($facture);
+            $facture->setVente($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFacture(Facture $facture): static
+    {
+        if ($this->factures->removeElement($facture)) {
+            // set the owning side to null (unless already changed)
+            if ($facture->getVente() === $this) {
+                $facture->setVente(null);
             }
         }
 

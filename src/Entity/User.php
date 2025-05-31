@@ -38,15 +38,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 50)]
     private ?string $email = null;
 
-    /**
-     * @var Collection<int, Acheteur>
-     */
-    #[ORM\OneToMany(targetEntity: Acheteur::class, mappedBy: 'user', orphanRemoval: true)]
-    private Collection $acheteurs;
+    // /**
+    //  * @var Collection<int, Acheteur>
+    //  */
+    // #[ORM\OneToMany(targetEntity: Acheteur::class, mappedBy: 'user', orphanRemoval: true)]
+    // private Collection $acheteurs;
+
+    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?Acheteur $acheteur = null;
 
     public function __construct()
     {
-        $this->acheteurs = new ArrayCollection();
+        // $this->acheteurs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -136,32 +139,49 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Acheteur>
-     */
-    public function getAcheteurs(): Collection
+    // /**
+    //  * @return Collection<int, Acheteur>
+    //  */
+    // public function getAcheteurs(): Collection
+    // {
+    //     return $this->acheteurs;
+    // }
+
+    // public function addAcheteur(Acheteur $acheteur): static
+    // {
+    //     if (!$this->acheteurs->contains($acheteur)) {
+    //         $this->acheteurs->add($acheteur);
+    //         $acheteur->setUser($this);
+    //     }
+
+    //     return $this;
+    // }
+
+    // public function removeAcheteur(Acheteur $acheteur): static
+    // {
+    //     if ($this->acheteurs->removeElement($acheteur)) {
+    //         // set the owning side to null (unless already changed)
+    //         if ($acheteur->getUser() === $this) {
+    //             $acheteur->setUser(null);
+    //         }
+    //     }
+
+    //     return $this;
+    // }
+
+    public function getAcheteur(): ?Acheteur
     {
-        return $this->acheteurs;
+        return $this->acheteur;
     }
 
-    public function addAcheteur(Acheteur $acheteur): static
+    public function setAcheteur(Acheteur $acheteur): static
     {
-        if (!$this->acheteurs->contains($acheteur)) {
-            $this->acheteurs->add($acheteur);
+        // set the owning side of the relation if necessary
+        if ($acheteur->getUser() !== $this) {
             $acheteur->setUser($this);
         }
 
-        return $this;
-    }
-
-    public function removeAcheteur(Acheteur $acheteur): static
-    {
-        if ($this->acheteurs->removeElement($acheteur)) {
-            // set the owning side to null (unless already changed)
-            if ($acheteur->getUser() === $this) {
-                $acheteur->setUser(null);
-            }
-        }
+        $this->acheteur = $acheteur;
 
         return $this;
     }

@@ -45,6 +45,7 @@ class RegistrationFormType extends AbstractType
                 'choices' => [
                     'Acheteur-ice' => 'ROLE_ACHETEUR',
                     'Administrateur-ice' => 'ROLE_ADMIN',
+                    'Comptable' => 'ROLE_COMPTA',
                 ],
                 'multiple' => true,
                 'expanded' => true,

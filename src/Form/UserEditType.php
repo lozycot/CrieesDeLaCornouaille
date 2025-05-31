@@ -20,6 +20,7 @@ class UserEditType extends AbstractType
                 'choices' => [
                     'Acheteur-ice' => 'ROLE_ACHETEUR',
                     'Administrateur-ice' => 'ROLE_ADMIN',
+                    'Comptabilité' => 'ROLE_COMPTA',
                 ],
                 'multiple' => true,
                 'expanded' => true,

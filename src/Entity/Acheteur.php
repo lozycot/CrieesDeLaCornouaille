@@ -39,15 +39,19 @@ class Acheteur
     #[ORM\OneToMany(targetEntity: Enchere::class, mappedBy: 'Acheteur', orphanRemoval: true)]
     private Collection $encheres;
 
-    #[ORM\ManyToOne(inversedBy: 'acheteurs')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $user = null;
+    // #[ORM\ManyToOne(inversedBy: 'acheteurs')]
+    // #[ORM\JoinColumn(nullable: false)]
+    // private ?User $user = null;
 
     /**
      * @var Collection<int, Facture>
      */
     #[ORM\OneToMany(targetEntity: Facture::class, mappedBy: 'acheteur', orphanRemoval: true)]
     private Collection $factures;
+
+    #[ORM\OneToOne(inversedBy: 'acheteur', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
 
     public function __construct()
     {
@@ -162,17 +166,17 @@ class Acheteur
         return $this;
     }
 
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
+    // public function getUser(): ?User
+    // {
+    //     return $this->user;
+    // }
 
-    public function setUser(?User $user): static
-    {
-        $this->user = $user;
+    // public function setUser(?User $user): static
+    // {
+    //     $this->user = $user;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     /**
      * @return Collection<int, Facture>
@@ -200,6 +204,18 @@ class Acheteur
                 $facture->setAcheteur(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }

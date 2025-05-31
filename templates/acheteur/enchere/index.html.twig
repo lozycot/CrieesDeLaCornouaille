@@ -22,6 +22,7 @@
                                 <th></th>
                                 <th>Num. lot</th>
                                 <th>Bateau</th>
+                                <th>Date pêche</th>
                                 <th>Éspèce</th>
                                 <th>Bac</th>
                                 <th>Prix au Kg</th>
@@ -42,6 +43,7 @@
                                 {% endif %}
                                         <td>{{ lot.id }}</td>
                                         <td>{{ lot.peche.bateau.nomBateau }}</td>
+                                        <td>{{ lot.peche.datePeche('d-m-Y') }}</td>
                                         <td>{{ lot.espece.nomEspece }}</td>
                                         <td>{{ lot.bac.tare }}</td>
                                         <td>{{ lot.prixDepart }}</td>

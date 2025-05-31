@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Factures{% endblock %}
+
+{% block body %}
+<div class="container my-5 p-5 col-lg-10">
+    {{ affichageDesMessages }}
+    <h1>Mes factures</h1>
+    <ul class="nav nav-tabs mb-3" id="facturesTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="nonPayees-tab" data-bs-toggle="tab" data-bs-target="#nonPayees" type="button" role="tab" aria-controls="nonPayees" aria-selected="true">
+                Factures à payer
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="payees-tab" data-bs-toggle="tab" data-bs-target="#payees" type="button" role="tab" aria-controls="payees" aria-selected="false">
+                Anciennes factures
+            </button>
+        </li>
+    </ul>
+    <div class="tab-content" id="FacturesTabsContent">
+        <div class="tab-pane fade show active" id="nonPayees" role="tabpanel" aria-labelledby="nonPayees-tab">
+            <h2>Factures à payer</h2>
+            <div class="card mb-4">
+                {% for facture in factures %}
+                    {% if not facture.payee %}
+                        {% include 'acheteur/factures/afficherUneFacture.html.twig' with {
+                            'facture': facture
+                        } %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <div class="tab-pane fade" id="payees" role="tabpanel" aria-labelledby="payees-tab">
+            <h2>Anciennes factures</h2>
+            <div class="card mb-4">
+                {% for facture in factures %}
+                    {% if facture.payee %}
+                        {% include 'acheteur/factures/afficherUneFacture.html.twig' with {
+                            'facture': facture
+                        } %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
