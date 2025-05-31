@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Générer des factures{% endblock %}
+
+{% block body %}
+    <div class="container my-5 p-5 col-lg-10">
+        {{ affichageDesMessages }}
+        <h3>Générer des factures</h3>
+        <form name="choix_date" method="post" action="{{ path('app_compta_factures_generer') }}">
+            <label class="form-label" for="la_date">Date de la vente pour laquelle générer les factures</label>
+            <input type="date" name="la_date" id="la_date" class="form-control">
+            <input type="hidden" name="_token" value="{{ csrf_token('date') }}">
+            <br><button class="btn btn-primary">Générer</button>
+        </form>
+    </div>
+{% endblock %}

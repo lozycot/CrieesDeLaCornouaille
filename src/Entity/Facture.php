@@ -25,6 +25,9 @@ class Facture
     #[ORM\OneToMany(targetEntity: Lot::class, mappedBy: 'facture')]
     private Collection $lots;
 
+    #[ORM\Column]
+    private ?bool $payee = null;
+
     public function __construct()
     {
         $this->lots = new ArrayCollection();
@@ -73,6 +76,18 @@ class Facture
                 $lot->setFacture(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isPayee(): ?bool
+    {
+        return $this->payee;
+    }
+
+    public function setPayee(bool $payee): static
+    {
+        $this->payee = $payee;
 
         return $this;
     }

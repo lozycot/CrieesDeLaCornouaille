@@ -3,20 +3,12 @@
 {# Ajouter ce bloc dans les templates pour afficher les messages d'erreur,
 de validations, etc. #}
 {% set affichageDesMessages %}
-    {% for message in app.flashes('success') %}
-        <div class="alert alert-success" role="alert">
-            {{ message }}
-        </div>
-    {% endfor %}
-    {% for message in app.flashes('warning') %}
-        <div class="alert alert-warning" role="alert">
-            {{ message }}
-        </div>
-    {% endfor %}
-    {% for message in app.flashes('info') %}
-        <div class="alert alert-info" role="alert">
-            {{ message }}
-        </div>
+    {% for label, messages in app.flashes(['warning', 'info', 'success', 'danger', 'error']) %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }}">
+                {{ message }}
+            </div>
+        {% endfor %}
     {% endfor %}
 {% endset %}
 
@@ -64,6 +56,8 @@ de validations, etc. #}
                                         <li><a class="dropdown-item" href="{{ path('app_bateaux') }}">Gérer les bateaux</a></li>
                                         <li><a class="dropdown-item" href="{{ path('app_peches') }}">Gérer les pêches</a></li>
                                         <li><a class="dropdown-item" href="{{ path('app_ventes') }}">Gérer les dates de vente</a></li>
+                                        <div class="dropdown-divider"></div>
+                                        <li><a class="dropdown-item" href="{{ path('app_compta_factures') }}">Générer les factures</a></li>
                                     </ul>
                                 </li>
                             {% endif %}
