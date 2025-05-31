@@ -43,7 +43,7 @@
                                 {% endif %}
                                         <td>{{ lot.id }}</td>
                                         <td>{{ lot.peche.bateau.nomBateau }}</td>
-                                        <td>{{ lot.peche.datePeche('d-m-Y') }}</td>
+                                        <td>{{ lot.peche.datePeche|date('d-m-Y') }}</td>
                                         <td>{{ lot.espece.nomEspece }}</td>
                                         <td>{{ lot.bac.tare }}</td>
                                         <td>{{ lot.prixDepart }}</td>
