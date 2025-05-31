@@ -3,23 +3,41 @@
 namespace App\DataFixtures;
 
 use App\Entity\User;
+use App\Entity\Acheteur;
 use App\Entity\Presentation;
 use App\Entity\Taille;
 use App\Entity\Qualite;
 use App\Entity\TypeBateau;
 use App\Entity\Bateau;
 use App\Entity\Bac;
+use App\Entity\Enchere;
 use App\Entity\Espece;
 use App\Entity\Peche;
 use App\Entity\Vente;
 use App\Entity\Lot;
+use DateTime;
+use DateInterval;
+use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
+    private UserPasswordHasherInterface $userPasswordHasher;
+
+    public function __construct (UserPasswordHasherInterface $userPasswordHasher)
+    {
+        $this->userPasswordHasher = $userPasswordHasher;
+    }
+
     public function load(ObjectManager $manager): void
     {
+        /*
+         * UTILISATEURS
+         */
+        $acheteurs = [];
+
         $user = new User();
         $user->setLogin('admin');
         $user->setEmail('test@test.com');
@@ -28,6 +46,73 @@ class AppFixtures extends Fixture
 
         $manager->persist($user);
         $manager->flush();
+
+        $user1 = new User();
+        $user1->setLogin('acheteur1');
+        $user1->setEmail('acheteur1@test.com');
+        $user1->setRoles(['ROLE_USER', 'ROLE_ACHETEUR']);
+        $user1->setPassword($this->userPasswordHasher->hashPassword($user1, 'acheteur123!'));
+
+
+        $manager->persist($user1);
+        $manager->flush();
+
+        $acheteur1 = new Acheteur();
+        $acheteur1->setCodePostal('67000');
+        $acheteur1->setNumHabilitation('5654');
+        $acheteur1->setNumRue('26');
+        $acheteur1->setRaisonSocialeEntreprise('SARL ACHETEUR 1');
+        $acheteur1->setRue('Rue Schoch');
+        $acheteur1->setUser($user1);
+        $acheteur1->setVille('STRASBOURG');
+
+        $manager->persist($acheteur1);
+        $manager->flush();
+        $acheteurs[] = $acheteur1;
+
+        $user2 = new User();
+        $user2->setLogin('acheteur2');
+        $user2->setEmail('acheteur2@test.com');
+        $user2->setRoles(['ROLE_USER', 'ROLE_ACHETEUR']);
+        $user2->setPassword($this->userPasswordHasher->hashPassword($user2, 'acheteur123!'));
+
+        $manager->persist($user2);
+        $manager->flush();
+
+        $acheteur2 = new Acheteur();
+        $acheteur2->setCodePostal('56000');
+        $acheteur2->setNumHabilitation('55654');
+        $acheteur2->setNumRue('75');
+        $acheteur2->setRaisonSocialeEntreprise('SARL LA POISSCAILLE');
+        $acheteur2->setRue('Rue du port');
+        $acheteur2->setUser($user2);
+        $acheteur2->setVille('SARZEAU');
+
+        $manager->persist($acheteur2);
+        $manager->flush();
+        $acheteurs[] = $acheteur2;
+
+        $user3 = new User();
+        $user3->setLogin('acheteur3');
+        $user3->setEmail('acheteur3@test.com');
+        $user3->setRoles(['ROLE_USER', 'ROLE_ACHETEUR']);
+        $user3->setPassword($this->userPasswordHasher->hashPassword($user3, 'acheteur123!'));
+
+        $manager->persist($user3);
+        $manager->flush();
+
+        $acheteur3 = new Acheteur();
+        $acheteur3->setCodePostal('56000');
+        $acheteur3->setNumHabilitation('56554');
+        $acheteur3->setNumRue('41');
+        $acheteur3->setRaisonSocialeEntreprise('SARL LE PENNEC');
+        $acheteur3->setRue('Rue de la mer');
+        $acheteur3->setUser($user1);
+        $acheteur3->setVille('ST-ARMEL');
+
+        $manager->persist($acheteur3);
+        $manager->flush();
+        $acheteurs[] = $acheteur3;
 
         // Presentation
         $presentations = [];
@@ -170,36 +255,40 @@ class AppFixtures extends Fixture
             $peches[$id] = $peche;
         }
 
-        // Add 5 ventes with today's date, heureDebut/heureFin as described
-        $today = new \DateTimeImmutable('today');
-        $now = new \DateTime();
-        // Round up to the next half hour
-        $minute = (int)$now->format('i');
-        $second = (int)$now->format('s');
-        if ($minute === 0 && $second === 0) {
-            $nextHalfHour = (clone $now)->setTime((int)$now->format('H'), 0, 0);
-        } elseif ($minute < 30) {
-            $nextHalfHour = (clone $now)->setTime((int)$now->format('H'), 30, 0);
-        } else {
-            $nextHalfHour = (clone $now)->modify('+1 hour')->setTime((int)$now->format('H') + 1, 0, 0);
-        }
+        // // Add 5 ventes with today's date, heureDebut/heureFin as described
+        // $today = new \DateTimeImmutable('today');
+        // $now = new \DateTime();
+        // // Round up to the next half hour
+        // $minute = (int)$now->format('i');
+        // $second = (int)$now->format('s');
+        // if ($minute === 0 && $second === 0) {
+        //     $nextHalfHour = (clone $now)->setTime((int)$now->format('H'), 0, 0);
+        // } elseif ($minute < 30) {
+        //     $nextHalfHour = (clone $now)->setTime((int)$now->format('H'), 30, 0);
+        // } else {
+        //     $nextHalfHour = (clone $now)->modify('+1 hour')->setTime((int)$now->format('H') + 1, 0, 0);
+        // }
 
+        // Créer 5 ventes à 1 jour d'intervalle
+        $laDate = new DateTimeImmutable('today');
         $ventesArray = [];
-        $heureDebut = clone $nextHalfHour;
+        $heureDebut = new DateTime('06:00:00');
+        $heureFin = new DateTime('16:00:00');
         for ($i = 0; $i < 5; $i++) {
             $vente = new Vente();
-            $vente->setDateVente(\DateTime::createFromImmutable($today));
-            $vente->setHeureDebut(clone $heureDebut);
-            $heureFin = (clone $heureDebut)->modify('+1 hour');
+            $vente->setDateVente(DateTime::createFromImmutable($laDate));
+            $vente->setHeureDebut($heureDebut);
             $vente->setHeureFin($heureFin);
             $manager->persist($vente);
             $ventesArray[] = $vente;
-            $heureDebut = (clone $heureFin);
+            $interval = DateInterval::createFromDateString('1 day');
+            $laDate = $laDate->add($interval);
         }
 
         // Create 3 to 7 lots for each vente
         foreach ($ventesArray as $vente) {
-            $nbLots = random_int(3, 7);
+            // $nbLots = random_int(3, 7);
+            $nbLots = 5;
             for ($i = 0; $i < $nbLots; $i++) {
                 $lot = new Lot();
                 $lot->setPrixPlancher(mt_rand(100, 300) / 10); // 10.0 - 30.0
@@ -210,11 +299,12 @@ class AppFixtures extends Fixture
                 $prixDepart = $prixAuKg * $poids;
                 $lot->setPrixDepart($prixDepart);
 
-                $lot->setPrixEncheresMax(mt_rand(200, 500) / 10); // 20.0 - 50.0
+                $lot->setPrixEncheresMax($lot->getPrixDepart() + 100); // 20.0 - 50.0
 
                 // Heure d'ouverture enchère: répartir sur l'heure de la vente
-                $minutes = (int)($i * (60 / $nbLots));
-                $heureDebutEnchere = (clone $vente->getHeureDebut())->modify("+$minutes minutes");
+                // $minutes = (int)($i * (60 / $nbLots));
+                $heures = $i * 2;
+                $heureDebutEnchere = (clone $vente->getHeureDebut())->modify("+$heures hours");
                 $lot->setHeureDebutEnchere($heureDebutEnchere);
                 $lot->setVente($vente);
                 $lot->setCodeEtat('OK');
@@ -227,6 +317,25 @@ class AppFixtures extends Fixture
                 // Assign a random Peche to each lot
                 $lot->setPeche($peches[array_rand($peches)]);
                 $manager->persist($lot);
+
+                // ajouter des enchères
+                $nbEncheres = 3;
+                $prixEnchere = $lot->getPrixDepart() + 10;
+                for($j = 0; $j < $nbEncheres; $j++) {
+                    $enchere = new Enchere();
+
+                    // choisir un acheteur au hasard
+                    $acheteur = $acheteurs[array_rand($acheteurs)];
+                    $minutes = $j * 10 + 10;
+                    $enchere->setAcheteur($acheteur);
+                    $enchere->setLot($lot);
+                    $enchere->setHeureEnchere((clone $lot->getHeureDebutEnchere())->modify("+$minutes minutes"));
+                    $enchere->setPrixEnchere($prixEnchere);
+                    $manager->persist($enchere);
+                    $manager->flush();
+                    
+                    $prixEnchere += 10;
+                }
             }
         }
 
