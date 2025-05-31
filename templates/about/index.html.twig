@@ -1,11 +1,91 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}À propos{% endblock %}
+{% block title %}À propos - CGU, CGV et Confidentialité{% endblock %}
 
 {% block body %}
 <div class="container my-5 p-5 col-lg-8 justify-content-center">
     {{ affichageDesMessages }}
-    <h1>À propos</h1>
-    <p>Bienvenue sur l'application de la Criée de la Cornouaille. Cette plateforme permet la gestion des ventes, lots, acheteurs, bateaux, et plus encore.</p>
+    <h1 class="mb-4">À propos</h1>
+    <p>
+        Bienvenue sur l'application de la <strong>Criée de la Cornouaille</strong>. Cette plateforme permet la gestion des ventes, lots, acheteurs, bateaux, et plus encore.
+    </p>
+
+    <hr class="my-4">
+
+    <h2>1. Conditions Générales d'Utilisation (CGU)</h2>
+
+    <h5>1.1 Objet</h5>
+    <p>Les présentes CGU régissent l’accès et l’utilisation du site <strong>Criée de la Cornouaille</strong>, plateforme d’enchères en ligne sur des lots de poisson.</p>
+
+    <h5>1.2 Acceptation</h5>
+    <p>L’utilisation du site implique l’acceptation sans réserve des présentes CGU.</p>
+
+    <h5>1.3 Accès au site</h5>
+    <p>Le site est accessible 24h/24 et 7j/7. Certaines fonctionnalités nécessitent un compte utilisateur validé.</p>
+
+    <h5>1.4 Fonctionnement des enchères</h5>
+    <ul>
+        <li>Durée limitée pour chaque enchère</li>
+        <li>Participation réservée aux utilisateurs enregistrés</li>
+        <li>Le meilleur enchérisseur remporte le lot</li>
+        <li>Enchères fermes et définitives</li>
+    </ul>
+
+    <h5>1.5 Propriété intellectuelle</h5>
+    <p>Tous les contenus du site sont protégés par le droit d’auteur. Toute reproduction est interdite sans autorisation.</p>
+
+    <h5>1.6 Responsabilité</h5>
+    <p>La Criée de la Cornouaille ne peut être tenue responsable des interruptions techniques du site.</p>
+
+    <hr class="my-4">
+
+    <h2>2. Conditions Générales de Vente (CGV)</h2>
+
+    <h5>2.1 Objet</h5>
+    <p>Les CGV encadrent les ventes issues des enchères en ligne sur les lots de poisson.</p>
+
+    <h5>2.2 Produits</h5>
+    <p>Les produits sont décrits avec précision (espèce, poids, origine). Aucun retour possible après enchère remportée.</p>
+
+    <h5>2.3 Prix et enchères</h5>
+    <ul>
+        <li>Prix de départ fixé par la Criée</li>
+        <li>Enchères limitées dans le temps</li>
+        <li>Lot vendu au meilleur enchérisseur au prix final</li>
+    </ul>
+
+    <h5>2.4 Paiement</h5>
+    <p>Paiement immédiat après clôture, par carte bancaire ou autres moyens sécurisés.</p>
+
+    <h5>2.5 Livraison ou retrait</h5>
+    <p>Modalités précisées lors de la commande. La fraîcheur est garantie jusqu’à la livraison ou le retrait.</p>
+
+    <h5>2.6 Droit de rétractation</h5>
+    <p>Pas de rétractation possible pour les produits périssables conformément à la loi.</p>
+
+    <hr class="my-4">
+
+    <h2>3. Politique de Confidentialité</h2>
+
+    <h5>3.1 Données collectées</h5>
+    <ul>
+        <li>Nom, prénom</li>
+        <li>Email</li>
+        <li>Adresse</li>
+        <li>Historique des enchères</li>
+        <li>Données de paiement (sécurisées)</li>
+    </ul>
+
+    <h5>3.2 Utilisation</h5>
+    <p>Les données servent à la gestion de votre compte, à la participation aux enchères et au suivi des commandes.</p>
+
+    <h5>3.3 Partage</h5>
+    <p>Les données sont utilisées uniquement par nos services ou partenaires de livraison/paiement. Aucune revente.</p>
+
+    <h5>3.4 Sécurité</h5>
+    <p>Nous utilisons des technologies sécurisées (SSL, serveurs protégés) pour garantir la confidentialité de vos données.</p>
+
+    <h5>3.5 Vos droits</h5>
+    <p>Vous pouvez demander l’accès, la modification ou la suppression de vos données en nous écrivant à : <strong>contact@criee-cornouaille.fr</strong>.</p>
 </div>
 {% endblock %}
