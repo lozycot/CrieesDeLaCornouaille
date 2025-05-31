@@ -41,10 +41,17 @@ class AppFixtures extends Fixture
         $user = new User();
         $user->setLogin('admin');
         $user->setEmail('test@test.com');
-        $user->setRoles(['ROLE_USER', 'ROLE_ADMIN']);
+        $user->setRoles(['ROLE_USER', 'ROLE_ADMIN', 'ROLE_COMPTA']);
         $user->setPassword('$2y$13$Y24llt0UhNgB6EjP7684H.hwQz0lBc35EOGpu5anT6htbguA4QaTa'); // hashed password
-
         $manager->persist($user);
+        $manager->flush();
+
+        $comptable = new User();
+        $comptable->setLogin('comptable');
+        $comptable->setEmail('compta@criee-cornouaille.fr');
+        $comptable->setRoles(['ROLE_COMPTA']);
+        $comptable->setPassword($this->userPasswordHasher->hashPassword($comptable, 'comptable123!'));
+        $manager->persist($comptable);
         $manager->flush();
 
         $user1 = new User();
@@ -107,7 +114,7 @@ class AppFixtures extends Fixture
         $acheteur3->setNumRue('41');
         $acheteur3->setRaisonSocialeEntreprise('SARL LE PENNEC');
         $acheteur3->setRue('Rue de la mer');
-        $acheteur3->setUser($user1);
+        $acheteur3->setUser($user3);
         $acheteur3->setVille('ST-ARMEL');
 
         $manager->persist($acheteur3);
@@ -269,8 +276,8 @@ class AppFixtures extends Fixture
         //     $nextHalfHour = (clone $now)->modify('+1 hour')->setTime((int)$now->format('H') + 1, 0, 0);
         // }
 
-        // Créer 5 ventes à 1 jour d'intervalle
-        $laDate = new DateTimeImmutable('yesterday');
+        // Créer 5 ventes à 1 jour d'intervalle à partir d'avant hier
+        $laDate = new DateTimeImmutable('now - 2 day');
         $ventesArray = [];
         $heureDebut = new DateTime('06:00:00');
         $heureFin = new DateTime('16:00:00');
