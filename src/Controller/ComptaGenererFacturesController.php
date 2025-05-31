@@ -22,7 +22,9 @@ final class ComptaGenererFacturesController extends AbstractController
             $dateVente = Datetime::createFromFormat('Y-m-d', $request->request->get('la_date'));
             $vente = $venteRepo->findOneBy(array('dateVente' => $dateVente));
             $flash = $serviceVVerif->genererFactures($vente);
-            $this->addFlash($flash['type'], $flash['content']);
+            foreach($flash as $f) {
+                $this->addFlash($f['type'], $f['content']);
+            }
             
         }
         return $this->redirectToRoute('app_compta_factures');

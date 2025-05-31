@@ -270,7 +270,7 @@ class AppFixtures extends Fixture
         // }
 
         // Créer 5 ventes à 1 jour d'intervalle
-        $laDate = new DateTimeImmutable('today');
+        $laDate = new DateTimeImmutable('yesterday');
         $ventesArray = [];
         $heureDebut = new DateTime('06:00:00');
         $heureFin = new DateTime('16:00:00');

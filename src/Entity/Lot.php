@@ -63,9 +63,6 @@ class Lot
     private ?Peche $peche = null;
 
     #[ORM\ManyToOne(inversedBy: 'lots')]
-    private ?Facture $facture = null;
-
-    #[ORM\ManyToOne(inversedBy: 'lots')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Vente $vente = null;
 
@@ -250,18 +247,6 @@ class Lot
     public function setPeche(?Peche $peche): static
     {
         $this->peche = $peche;
-
-        return $this;
-    }
-
-    public function getFacture(): ?Facture
-    {
-        return $this->facture;
-    }
-
-    public function setFacture(?Facture $facture): static
-    {
-        $this->facture = $facture;
 
         return $this;
     }
